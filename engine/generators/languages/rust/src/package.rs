@@ -29,13 +29,16 @@ impl Package {
             return "".to_string();
         }
         
-        // Convert baml_client.types to crate::types::
+        // Convert baml_client.types to crate::types
         let mut path = String::new();
         for (i, part) in self.package_path.iter().enumerate() {
             if i == 0 && part == "baml_client" {
-                path.push_str("crate::");
+                path.push_str("crate");
             } else if i > 0 {
                 path.push_str(part);
+            }
+            // Only add separator if there's another part coming
+            if i < self.package_path.len() - 1 {
                 path.push_str("::");
             }
         }

@@ -64,7 +64,7 @@ func CallFunctionStreamFromC(runtime unsafe.Pointer, functionName string, encode
     cFunctionName := C.CString(functionName)
     defer C.free(unsafe.Pointer(cFunctionName))
     
-    result := C.WrapCallFunctionStreamFromC(runtime, cFunctionName, cEncodedArgs, C.uintptr_t(len(encodedArgs)), C.uint32_t(id))
+    result := C.WrapCallFunctionStreamFromC(runtime, cFunctionName, encodedArgs, C.uintptr_t(len(encodedArgs)), C.uint32_t(id))
     return result, nil
 }
 
