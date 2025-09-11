@@ -58,7 +58,7 @@ impl Default for BamlClient {
 }
 impl BamlClient {
     /// TestComplexMaps - Generated BAML function
-    pub async fn test_complex_maps(&self, input: String) -> BamlResult<crate::types::ComplexMaps> {
+    pub async fn test_complex_maps(&self, input: String) -> BamlResult<crate::typesComplexMaps> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -71,7 +71,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::ComplexMaps>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesComplexMaps>>,
             > + Send
             + Sync,
     > {
@@ -85,10 +85,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestEdgeCaseMaps - Generated BAML function
-    pub async fn test_edge_case_maps(
-        &self,
-        input: String,
-    ) -> BamlResult<crate::types::EdgeCaseMaps> {
+    pub async fn test_edge_case_maps(&self, input: String) -> BamlResult<crate::typesEdgeCaseMaps> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -101,7 +98,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::EdgeCaseMaps>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesEdgeCaseMaps>>,
             > + Send
             + Sync,
     > {
@@ -115,7 +112,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestLargeMaps - Generated BAML function
-    pub async fn test_large_maps(&self, input: String) -> BamlResult<crate::types::SimpleMaps> {
+    pub async fn test_large_maps(&self, input: String) -> BamlResult<crate::typesSimpleMaps> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -128,7 +125,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleMaps>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleMaps>>,
             > + Send
             + Sync,
     > {
@@ -142,7 +139,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestNestedMaps - Generated BAML function
-    pub async fn test_nested_maps(&self, input: String) -> BamlResult<crate::types::NestedMaps> {
+    pub async fn test_nested_maps(&self, input: String) -> BamlResult<crate::typesNestedMaps> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -155,7 +152,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::NestedMaps>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesNestedMaps>>,
             > + Send
             + Sync,
     > {
@@ -169,7 +166,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestSimpleMaps - Generated BAML function
-    pub async fn test_simple_maps(&self, input: String) -> BamlResult<crate::types::SimpleMaps> {
+    pub async fn test_simple_maps(&self, input: String) -> BamlResult<crate::typesSimpleMaps> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -182,7 +179,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleMaps>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleMaps>>,
             > + Send
             + Sync,
     > {
@@ -369,7 +366,7 @@ impl BamlClient {
     pub async fn test_top_level_map_of_objects(
         &self,
         input: String,
-    ) -> BamlResult<std::collections::HashMap<String, crate::types::User>> {
+    ) -> BamlResult<std::collections::HashMap<String, crate::typesUser>> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -386,7 +383,7 @@ impl BamlClient {
         impl futures::Stream<
                 Item = BamlResult<
                     baml_client_rust::StreamState<
-                        std::collections::HashMap<String, crate::types::User>,
+                        std::collections::HashMap<String, crate::typesUser>,
                     >,
                 >,
             > + Send

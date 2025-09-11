@@ -51,6 +51,7 @@ default-members = [
 ]
 
 [workspace.dependencies]
+baml-client-rust = { path = "language_client_rust" }
 anyhow = "1.0"
 askama = { version = "0.14.0", features = ["code-in-doc"] }
 baml-cli = { path = "cli" }

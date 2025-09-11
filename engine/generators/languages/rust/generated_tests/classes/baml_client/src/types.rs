@@ -14,23 +14,23 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SimpleClass {
-    pub digits: String,
+    pub digits: i64,
 
     pub words: String,
 }
 
 impl SimpleClass {
     /// Create a new SimpleClass instance
-    pub fn new(digits: String, words: String) -> Self {
+    pub fn new(digits: i64, words: String) -> Self {
         Self { digits, words }
     }
 }
 
 impl Default for SimpleClass {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(0, String::new())
     }
 }
 

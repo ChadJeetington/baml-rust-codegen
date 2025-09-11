@@ -61,7 +61,7 @@ impl BamlClient {
     pub async fn test_complex_nested(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::ComplexNested> {
+    ) -> BamlResult<crate::typesComplexNested> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -76,7 +76,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::ComplexNested>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesComplexNested>>,
             > + Send
             + Sync,
     > {
@@ -90,10 +90,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestDeeplyNested - Generated BAML function
-    pub async fn test_deeply_nested(
-        &self,
-        input: String,
-    ) -> BamlResult<crate::types::DeeplyNested> {
+    pub async fn test_deeply_nested(&self, input: String) -> BamlResult<crate::typesDeeplyNested> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -106,7 +103,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::DeeplyNested>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesDeeplyNested>>,
             > + Send
             + Sync,
     > {
@@ -123,7 +120,7 @@ impl BamlClient {
     pub async fn test_recursive_structure(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::RecursiveStructure> {
+    ) -> BamlResult<crate::typesRecursiveStructure> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -138,7 +135,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::RecursiveStructure>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesRecursiveStructure>>,
             > + Send
             + Sync,
     > {
@@ -152,10 +149,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestSimpleNested - Generated BAML function
-    pub async fn test_simple_nested(
-        &self,
-        input: String,
-    ) -> BamlResult<crate::types::SimpleNested> {
+    pub async fn test_simple_nested(&self, input: String) -> BamlResult<crate::typesSimpleNested> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -168,7 +162,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleNested>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleNested>>,
             > + Send
             + Sync,
     > {

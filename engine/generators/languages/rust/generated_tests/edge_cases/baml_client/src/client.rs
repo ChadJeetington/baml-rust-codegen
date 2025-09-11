@@ -61,7 +61,7 @@ impl BamlClient {
     pub async fn test_circular_reference(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::CircularReference> {
+    ) -> BamlResult<crate::typesCircularReference> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -76,7 +76,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::CircularReference>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesCircularReference>>,
             > + Send
             + Sync,
     > {
@@ -90,7 +90,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestDeepRecursion - Generated BAML function
-    pub async fn test_deep_recursion(&self, depth: i64) -> BamlResult<crate::types::DeepRecursion> {
+    pub async fn test_deep_recursion(&self, depth: i64) -> BamlResult<crate::typesDeepRecursion> {
         let mut context = BamlContext::new();
         context = context.set_arg("depth", depth)?;
 
@@ -105,7 +105,7 @@ impl BamlClient {
         depth: i64,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::DeepRecursion>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesDeepRecursion>>,
             > + Send
             + Sync,
     > {
@@ -122,7 +122,7 @@ impl BamlClient {
     pub async fn test_empty_collections(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::EmptyCollections> {
+    ) -> BamlResult<crate::typesEmptyCollections> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -137,7 +137,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::EmptyCollections>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesEmptyCollections>>,
             > + Send
             + Sync,
     > {
@@ -154,7 +154,7 @@ impl BamlClient {
     pub async fn test_large_structure(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::LargeStructure> {
+    ) -> BamlResult<crate::typesLargeStructure> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -169,7 +169,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::LargeStructure>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesLargeStructure>>,
             > + Send
             + Sync,
     > {
@@ -186,7 +186,7 @@ impl BamlClient {
     pub async fn test_number_edge_cases(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::NumberEdgeCases> {
+    ) -> BamlResult<crate::typesNumberEdgeCases> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -201,7 +201,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::NumberEdgeCases>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesNumberEdgeCases>>,
             > + Send
             + Sync,
     > {
@@ -218,7 +218,7 @@ impl BamlClient {
     pub async fn test_special_characters(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::SpecialCharacters> {
+    ) -> BamlResult<crate::typesSpecialCharacters> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -233,7 +233,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SpecialCharacters>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSpecialCharacters>>,
             > + Send
             + Sync,
     > {

@@ -58,7 +58,7 @@ impl Default for BamlClient {
 }
 impl BamlClient {
     /// TestAllNull - Generated BAML function
-    pub async fn test_all_null(&self, input: String) -> BamlResult<crate::types::NullableTypes> {
+    pub async fn test_all_null(&self, input: String) -> BamlResult<crate::typesNullableTypes> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -71,7 +71,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::NullableTypes>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesNullableTypes>>,
             > + Send
             + Sync,
     > {
@@ -88,7 +88,7 @@ impl BamlClient {
     pub async fn test_all_optional_omitted(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::OptionalFields> {
+    ) -> BamlResult<crate::typesOptionalFields> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -103,7 +103,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::OptionalFields>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesOptionalFields>>,
             > + Send
             + Sync,
     > {
@@ -120,7 +120,7 @@ impl BamlClient {
     pub async fn test_mixed_optional_nullable(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::MixedOptionalNullable> {
+    ) -> BamlResult<crate::typesMixedOptionalNullable> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -135,9 +135,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<
-                    baml_client_rust::StreamState<crate::types::MixedOptionalNullable>,
-                >,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesMixedOptionalNullable>>,
             > + Send
             + Sync,
     > {
@@ -154,7 +152,7 @@ impl BamlClient {
     pub async fn test_nullable_types(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::NullableTypes> {
+    ) -> BamlResult<crate::typesNullableTypes> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -169,7 +167,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::NullableTypes>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesNullableTypes>>,
             > + Send
             + Sync,
     > {
@@ -186,7 +184,7 @@ impl BamlClient {
     pub async fn test_optional_fields(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::OptionalFields> {
+    ) -> BamlResult<crate::typesOptionalFields> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -201,7 +199,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::OptionalFields>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesOptionalFields>>,
             > + Send
             + Sync,
     > {

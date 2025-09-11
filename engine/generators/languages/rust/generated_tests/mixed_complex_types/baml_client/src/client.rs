@@ -11,8 +11,8 @@
 // You can install baml-cli with:
 //  $ cargo install baml-cli
 
-use crate::types::*;
 use baml_client_rust::{BamlClient as CoreBamlClient, BamlClientBuilder, BamlContext, BamlResult};
+use crate::types::*;
 use futures::Stream;
 
 /// Main BAML client for executing functions
@@ -27,24 +27,24 @@ impl BamlClient {
         let client = CoreBamlClient::from_env()?;
         Ok(Self { client })
     }
-
+    
     /// Create a new BAML client from a directory containing BAML files
     #[cfg(not(target_arch = "wasm32"))]
     pub fn from_directory<P: AsRef<std::path::Path>>(path: P) -> BamlResult<Self> {
         let client = CoreBamlClient::from_directory(path, std::env::vars().collect())?;
         Ok(Self { client })
     }
-
+    
     /// Create a new BAML client with custom configuration
     pub fn builder() -> BamlClientBuilder {
         BamlClientBuilder::new()
     }
-
+    
     /// Create a new BAML client with a custom core client
     pub fn with_core_client(client: CoreBamlClient) -> Self {
         Self { client }
     }
-
+    
     /// Get access to the underlying core client
     pub fn core_client(&self) -> &CoreBamlClient {
         &self.client
@@ -58,57 +58,48 @@ impl Default for BamlClient {
 }
 impl BamlClient {
     /// TestKitchenSink - Generated BAML function
-    pub async fn test_kitchen_sink(&self, input: String) -> BamlResult<crate::types::KitchenSink> {
+    pub async fn test_kitchen_sink(
+        &self,
+        input: String,
+    ) -> BamlResult<crate::typesKitchenSink> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
-
+        
         self.client.call_function("TestKitchenSink", context).await
     }
-
+    
     /// TestKitchenSink (streaming) - Generated BAML function  
     pub async fn test_kitchen_sink_stream(
         &self,
         input: String,
-    ) -> BamlResult<
-        impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::KitchenSink>>,
-            > + Send
-            + Sync,
-    > {
+    ) -> BamlResult<impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::typesKitchenSink>>> + Send + Sync> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
-
-        self.client
-            .call_function_stream("TestKitchenSink", context)
-            .await
+        
+        self.client.call_function_stream("TestKitchenSink", context).await
     }
 }
 impl BamlClient {
     /// TestRecursiveComplexity - Generated BAML function
-    pub async fn test_recursive_complexity(&self, input: String) -> BamlResult<crate::types::Node> {
+    pub async fn test_recursive_complexity(
+        &self,
+        input: String,
+    ) -> BamlResult<crate::typesNode> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
-
-        self.client
-            .call_function("TestRecursiveComplexity", context)
-            .await
+        
+        self.client.call_function("TestRecursiveComplexity", context).await
     }
-
+    
     /// TestRecursiveComplexity (streaming) - Generated BAML function  
     pub async fn test_recursive_complexity_stream(
         &self,
         input: String,
-    ) -> BamlResult<
-        impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::types::Node>>>
-            + Send
-            + Sync,
-    > {
+    ) -> BamlResult<impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::typesNode>>> + Send + Sync> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
-
-        self.client
-            .call_function_stream("TestRecursiveComplexity", context)
-            .await
+        
+        self.client.call_function_stream("TestRecursiveComplexity", context).await
     }
 }
 impl BamlClient {
@@ -116,28 +107,21 @@ impl BamlClient {
     pub async fn test_ultra_complex(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::UltraComplex> {
+    ) -> BamlResult<crate::typesUltraComplex> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
-
+        
         self.client.call_function("TestUltraComplex", context).await
     }
-
+    
     /// TestUltraComplex (streaming) - Generated BAML function  
     pub async fn test_ultra_complex_stream(
         &self,
         input: String,
-    ) -> BamlResult<
-        impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::UltraComplex>>,
-            > + Send
-            + Sync,
-    > {
+    ) -> BamlResult<impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::typesUltraComplex>>> + Send + Sync> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
-
-        self.client
-            .call_function_stream("TestUltraComplex", context)
-            .await
+        
+        self.client.call_function_stream("TestUltraComplex", context).await
     }
 }

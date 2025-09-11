@@ -58,7 +58,7 @@ impl Default for BamlClient {
 }
 impl BamlClient {
     /// PersonTest - Generated BAML function
-    pub async fn person_test(&self) -> BamlResult<crate::types::Person> {
+    pub async fn person_test(&self) -> BamlResult<crate::typesPerson> {
         let mut context = BamlContext::new();
 
         self.client.call_function("PersonTest", context).await
@@ -68,7 +68,7 @@ impl BamlClient {
     pub async fn person_test_stream(
         &self,
     ) -> BamlResult<
-        impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::types::Person>>>
+        impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::typesPerson>>>
             + Send
             + Sync,
     > {

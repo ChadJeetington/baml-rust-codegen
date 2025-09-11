@@ -60,9 +60,9 @@ impl BamlClient {
     /// TestMediaArrayInputs - Generated BAML function
     pub async fn test_media_array_inputs(
         &self,
-        imageArray: Vec<crate::types::BamlImage>,
+        imageArray: Vec<crate::typesBamlImage>,
         textInput: String,
-    ) -> BamlResult<crate::types::MediaArrayAnalysisResult> {
+    ) -> BamlResult<crate::typesMediaArrayAnalysisResult> {
         let mut context = BamlContext::new();
         context = context.set_arg("imageArray", imageArray)?;
         context = context.set_arg("textInput", textInput)?;
@@ -75,12 +75,12 @@ impl BamlClient {
     /// TestMediaArrayInputs (streaming) - Generated BAML function  
     pub async fn test_media_array_inputs_stream(
         &self,
-        imageArray: Vec<crate::types::BamlImage>,
+        imageArray: Vec<crate::typesBamlImage>,
         textInput: String,
     ) -> BamlResult<
         impl futures::Stream<
                 Item = BamlResult<
-                    baml_client_rust::StreamState<crate::types::MediaArrayAnalysisResult>,
+                    baml_client_rust::StreamState<crate::typesMediaArrayAnalysisResult>,
                 >,
             > + Send
             + Sync,
@@ -98,9 +98,9 @@ impl BamlClient {
     /// TestMediaInput - Generated BAML function
     pub async fn test_media_input(
         &self,
-        media: crate::types::Union4AudioOrImageOrPdfOrVideo,
+        media: crate::typesUnion4AudioOrImageOrPdfOrVideo,
         textInput: String,
-    ) -> BamlResult<crate::types::MediaAnalysisResult> {
+    ) -> BamlResult<crate::typesMediaAnalysisResult> {
         let mut context = BamlContext::new();
         context = context.set_arg("media", media)?;
         context = context.set_arg("textInput", textInput)?;
@@ -111,11 +111,11 @@ impl BamlClient {
     /// TestMediaInput (streaming) - Generated BAML function  
     pub async fn test_media_input_stream(
         &self,
-        media: crate::types::Union4AudioOrImageOrPdfOrVideo,
+        media: crate::typesUnion4AudioOrImageOrPdfOrVideo,
         textInput: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::MediaAnalysisResult>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesMediaAnalysisResult>>,
             > + Send
             + Sync,
     > {

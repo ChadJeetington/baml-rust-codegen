@@ -22,6 +22,17 @@ use std::sync::{
 use std::task::{Context as TaskContext, Poll};
 use tokio::sync::{mpsc as async_mpsc, oneshot};
 
+/// Core client trait that must be implemented by all BAML clients
+pub trait CoreClient {
+    fn runtime_ptr(&self) -> *const c_void;
+}
+
+impl CoreClient for BamlClient {
+    fn runtime_ptr(&self) -> *const c_void {
+        self.runtime_ptr
+    }
+}
+
 /// High-level BAML client for executing functions
 #[derive(Clone, Debug)]
 pub struct BamlClient {

@@ -14,30 +14,30 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct AllNullable {
-    pub nullString: String,
+    pub nullString: Option<String>,
 
-    pub nullInt: String,
+    pub nullInt: Option<i64>,
 
-    pub nullFloat: String,
+    pub nullFloat: Option<f64>,
 
-    pub nullBool: String,
+    pub nullBool: Option<bool>,
 
-    pub nullArray: String,
+    pub nullArray: Option<Vec<String>>,
 
-    pub nullObject: String,
+    pub nullObject: Option<crate::typesUser>,
 }
 
 impl AllNullable {
     /// Create a new AllNullable instance
     pub fn new(
-        nullString: String,
-        nullInt: String,
-        nullFloat: String,
-        nullBool: String,
-        nullArray: String,
-        nullObject: String,
+        nullString: Option<String>,
+        nullInt: Option<i64>,
+        nullFloat: Option<f64>,
+        nullBool: Option<bool>,
+        nullArray: Option<Vec<String>>,
+        nullObject: Option<crate::typesUser>,
     ) -> Self {
         Self {
             nullString,
@@ -52,14 +52,7 @@ impl AllNullable {
 
 impl Default for AllNullable {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(None, None, None, None, None, None)
     }
 }
 
@@ -158,27 +151,27 @@ impl baml_client_rust::types::FromBamlValue for AllNullable {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BooleanEdgeCases {
-    pub explicitTrue: String,
+    pub explicitTrue: bool,
 
-    pub explicitFalse: String,
+    pub explicitFalse: bool,
 
-    pub arrayOfTrue: String,
+    pub arrayOfTrue: Vec<bool>,
 
-    pub arrayOfFalse: String,
+    pub arrayOfFalse: Vec<bool>,
 
-    pub mixedBoolArray: String,
+    pub mixedBoolArray: Vec<bool>,
 }
 
 impl BooleanEdgeCases {
     /// Create a new BooleanEdgeCases instance
     pub fn new(
-        explicitTrue: String,
-        explicitFalse: String,
-        arrayOfTrue: String,
-        arrayOfFalse: String,
-        mixedBoolArray: String,
+        explicitTrue: bool,
+        explicitFalse: bool,
+        arrayOfTrue: Vec<bool>,
+        arrayOfFalse: Vec<bool>,
+        mixedBoolArray: Vec<bool>,
     ) -> Self {
         Self {
             explicitTrue,
@@ -192,13 +185,7 @@ impl BooleanEdgeCases {
 
 impl Default for BooleanEdgeCases {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(false, false, Vec::new(), Vec::new(), Vec::new())
     }
 }
 
@@ -302,27 +289,27 @@ impl baml_client_rust::types::FromBamlValue for BooleanEdgeCases {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct CircularReference {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
-    pub parent: String,
+    pub parent: Option<crate::typesCircularReference>,
 
-    pub children: String,
+    pub children: Vec<crate::typesCircularReference>,
 
-    pub relatedItems: String,
+    pub relatedItems: Vec<crate::typesCircularReference>,
 }
 
 impl CircularReference {
     /// Create a new CircularReference instance
     pub fn new(
-        id: String,
+        id: i64,
         name: String,
-        parent: String,
-        children: String,
-        relatedItems: String,
+        parent: Option<crate::typesCircularReference>,
+        children: Vec<crate::typesCircularReference>,
+        relatedItems: Vec<crate::typesCircularReference>,
     ) -> Self {
         Self {
             id,
@@ -336,13 +323,7 @@ impl CircularReference {
 
 impl Default for CircularReference {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(0, String::new(), None, Vec::new(), Vec::new())
     }
 }
 
@@ -431,23 +412,23 @@ impl baml_client_rust::types::FromBamlValue for CircularReference {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DeepRecursion {
     pub value: String,
 
-    pub next: String,
+    pub next: Option<crate::typesDeepRecursion>,
 }
 
 impl DeepRecursion {
     /// Create a new DeepRecursion instance
-    pub fn new(value: String, next: String) -> Self {
+    pub fn new(value: String, next: Option<crate::typesDeepRecursion>) -> Self {
         Self { value, next }
     }
 }
 
 impl Default for DeepRecursion {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(String::new(), None)
     }
 }
 
@@ -500,27 +481,27 @@ impl baml_client_rust::types::FromBamlValue for DeepRecursion {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct EmptyCollections {
-    pub emptyStringArray: String,
+    pub emptyStringArray: Vec<String>,
 
-    pub emptyIntArray: String,
+    pub emptyIntArray: Vec<i64>,
 
-    pub emptyObjectArray: String,
+    pub emptyObjectArray: Vec<crate::typesUser>,
 
-    pub emptyMap: String,
+    pub emptyMap: std::collections::HashMap<String, String>,
 
-    pub emptyNestedArray: String,
+    pub emptyNestedArray: Vec<Vec<String>>,
 }
 
 impl EmptyCollections {
     /// Create a new EmptyCollections instance
     pub fn new(
-        emptyStringArray: String,
-        emptyIntArray: String,
-        emptyObjectArray: String,
-        emptyMap: String,
-        emptyNestedArray: String,
+        emptyStringArray: Vec<String>,
+        emptyIntArray: Vec<i64>,
+        emptyObjectArray: Vec<crate::typesUser>,
+        emptyMap: std::collections::HashMap<String, String>,
+        emptyNestedArray: Vec<Vec<String>>,
     ) -> Self {
         Self {
             emptyStringArray,
@@ -535,11 +516,11 @@ impl EmptyCollections {
 impl Default for EmptyCollections {
     fn default() -> Self {
         Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+            std::collections::HashMap::new(),
+            Vec::new(),
         )
     }
 }
@@ -644,21 +625,21 @@ impl baml_client_rust::types::FromBamlValue for EmptyCollections {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct InnerNullable {
-    pub value: String,
+    pub value: Option<String>,
 }
 
 impl InnerNullable {
     /// Create a new InnerNullable instance
-    pub fn new(value: String) -> Self {
+    pub fn new(value: Option<String>) -> Self {
         Self { value }
     }
 }
 
 impl Default for InnerNullable {
     fn default() -> Self {
-        Self::new(String::new())
+        Self::new(None)
     }
 }
 
@@ -700,7 +681,7 @@ impl baml_client_rust::types::FromBamlValue for InnerNullable {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct LargeStructure {
     pub field1: String,
 
@@ -712,55 +693,55 @@ pub struct LargeStructure {
 
     pub field5: String,
 
-    pub field6: String,
+    pub field6: i64,
 
-    pub field7: String,
+    pub field7: i64,
 
-    pub field8: String,
+    pub field8: i64,
 
-    pub field9: String,
+    pub field9: i64,
 
-    pub field10: String,
+    pub field10: i64,
 
-    pub field11: String,
+    pub field11: f64,
 
-    pub field12: String,
+    pub field12: f64,
 
-    pub field13: String,
+    pub field13: f64,
 
-    pub field14: String,
+    pub field14: f64,
 
-    pub field15: String,
+    pub field15: f64,
 
-    pub field16: String,
+    pub field16: bool,
 
-    pub field17: String,
+    pub field17: bool,
 
-    pub field18: String,
+    pub field18: bool,
 
-    pub field19: String,
+    pub field19: bool,
 
-    pub field20: String,
+    pub field20: bool,
 
-    pub array1: String,
+    pub array1: Vec<String>,
 
-    pub array2: String,
+    pub array2: Vec<i64>,
 
-    pub array3: String,
+    pub array3: Vec<f64>,
 
-    pub array4: String,
+    pub array4: Vec<bool>,
 
-    pub array5: String,
+    pub array5: Vec<crate::typesUser>,
 
-    pub map1: String,
+    pub map1: std::collections::HashMap<String, String>,
 
-    pub map2: String,
+    pub map2: std::collections::HashMap<String, i64>,
 
-    pub map3: String,
+    pub map3: std::collections::HashMap<String, f64>,
 
-    pub map4: String,
+    pub map4: std::collections::HashMap<String, bool>,
 
-    pub map5: String,
+    pub map5: std::collections::HashMap<String, crate::typesUser>,
 }
 
 impl LargeStructure {
@@ -771,31 +752,31 @@ impl LargeStructure {
         field3: String,
         field4: String,
         field5: String,
-        field6: String,
-        field7: String,
-        field8: String,
-        field9: String,
-        field10: String,
-        field11: String,
-        field12: String,
-        field13: String,
-        field14: String,
-        field15: String,
-        field16: String,
-        field17: String,
-        field18: String,
-        field19: String,
-        field20: String,
-        array1: String,
-        array2: String,
-        array3: String,
-        array4: String,
-        array5: String,
-        map1: String,
-        map2: String,
-        map3: String,
-        map4: String,
-        map5: String,
+        field6: i64,
+        field7: i64,
+        field8: i64,
+        field9: i64,
+        field10: i64,
+        field11: f64,
+        field12: f64,
+        field13: f64,
+        field14: f64,
+        field15: f64,
+        field16: bool,
+        field17: bool,
+        field18: bool,
+        field19: bool,
+        field20: bool,
+        array1: Vec<String>,
+        array2: Vec<i64>,
+        array3: Vec<f64>,
+        array4: Vec<bool>,
+        array5: Vec<crate::typesUser>,
+        map1: std::collections::HashMap<String, String>,
+        map2: std::collections::HashMap<String, i64>,
+        map3: std::collections::HashMap<String, f64>,
+        map4: std::collections::HashMap<String, bool>,
+        map5: std::collections::HashMap<String, crate::typesUser>,
     ) -> Self {
         Self {
             field1,
@@ -840,31 +821,31 @@ impl Default for LargeStructure {
             String::new(),
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            0,
+            0,
+            0,
+            0,
+            0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            false,
+            false,
+            false,
+            false,
+            false,
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
         )
     }
 }
@@ -1231,19 +1212,22 @@ impl baml_client_rust::types::FromBamlValue for LargeStructure {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MixedEdgeCases {
     pub emptyString: String,
 
     pub singleChar: String,
 
-    pub veryLongArray: String,
+    pub veryLongArray: Vec<String>,
 
-    pub deeplyNestedMap: String,
+    pub deeplyNestedMap: std::collections::HashMap<
+        String,
+        std::collections::HashMap<String, std::collections::HashMap<String, String>>,
+    >,
 
-    pub mixedTypeArray: String,
+    pub mixedTypeArray: Vec<Option<crate::typesUnion3BoolOrIntOrString>>,
 
-    pub optionalEverything: String,
+    pub optionalEverything: Option<crate::typesOptionalEverything>,
 }
 
 impl MixedEdgeCases {
@@ -1251,10 +1235,13 @@ impl MixedEdgeCases {
     pub fn new(
         emptyString: String,
         singleChar: String,
-        veryLongArray: String,
-        deeplyNestedMap: String,
-        mixedTypeArray: String,
-        optionalEverything: String,
+        veryLongArray: Vec<String>,
+        deeplyNestedMap: std::collections::HashMap<
+            String,
+            std::collections::HashMap<String, std::collections::HashMap<String, String>>,
+        >,
+        mixedTypeArray: Vec<Option<crate::typesUnion3BoolOrIntOrString>>,
+        optionalEverything: Option<crate::typesOptionalEverything>,
     ) -> Self {
         Self {
             emptyString,
@@ -1272,10 +1259,10 @@ impl Default for MixedEdgeCases {
         Self::new(
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            Vec::new(),
+            std::collections::HashMap::new(),
+            Vec::new(),
+            None,
         )
     }
 }
@@ -1392,21 +1379,21 @@ impl baml_client_rust::types::FromBamlValue for MixedEdgeCases {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedNullable {
-    pub outer: String,
+    pub outer: Option<crate::typesOuterNullable>,
 }
 
 impl NestedNullable {
     /// Create a new NestedNullable instance
-    pub fn new(outer: String) -> Self {
+    pub fn new(outer: Option<crate::typesOuterNullable>) -> Self {
         Self { outer }
     }
 }
 
 impl Default for NestedNullable {
     fn default() -> Self {
-        Self::new(String::new())
+        Self::new(None)
     }
 }
 
@@ -1448,18 +1435,22 @@ impl baml_client_rust::types::FromBamlValue for NestedNullable {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NullEdgeCases {
-    pub allNull: String,
+    pub allNull: crate::typesAllNullable,
 
-    pub someNull: String,
+    pub someNull: crate::typesSomeNullable,
 
-    pub nestedNull: String,
+    pub nestedNull: crate::typesNestedNullable,
 }
 
 impl NullEdgeCases {
     /// Create a new NullEdgeCases instance
-    pub fn new(allNull: String, someNull: String, nestedNull: String) -> Self {
+    pub fn new(
+        allNull: crate::typesAllNullable,
+        someNull: crate::typesSomeNullable,
+        nestedNull: crate::typesNestedNullable,
+    ) -> Self {
         Self {
             allNull,
             someNull,
@@ -1470,7 +1461,11 @@ impl NullEdgeCases {
 
 impl Default for NullEdgeCases {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            crate::typesAllNullable::default(),
+            crate::typesSomeNullable::default(),
+            crate::typesNestedNullable::default(),
+        )
     }
 }
 
@@ -1534,42 +1529,42 @@ impl baml_client_rust::types::FromBamlValue for NullEdgeCases {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NumberEdgeCases {
-    pub zero: String,
+    pub zero: i64,
 
-    pub negativeInt: String,
+    pub negativeInt: i64,
 
-    pub largeInt: String,
+    pub largeInt: i64,
 
-    pub veryLargeInt: String,
+    pub veryLargeInt: i64,
 
-    pub smallFloat: String,
+    pub smallFloat: f64,
 
-    pub largeFloat: String,
+    pub largeFloat: f64,
 
-    pub negativeFloat: String,
+    pub negativeFloat: f64,
 
-    pub scientificNotation: String,
+    pub scientificNotation: f64,
 
-    pub infinity: String,
+    pub infinity: Option<f64>,
 
-    pub notANumber: String,
+    pub notANumber: Option<f64>,
 }
 
 impl NumberEdgeCases {
     /// Create a new NumberEdgeCases instance
     pub fn new(
-        zero: String,
-        negativeInt: String,
-        largeInt: String,
-        veryLargeInt: String,
-        smallFloat: String,
-        largeFloat: String,
-        negativeFloat: String,
-        scientificNotation: String,
-        infinity: String,
-        notANumber: String,
+        zero: i64,
+        negativeInt: i64,
+        largeInt: i64,
+        veryLargeInt: i64,
+        smallFloat: f64,
+        largeFloat: f64,
+        negativeFloat: f64,
+        scientificNotation: f64,
+        infinity: Option<f64>,
+        notANumber: Option<f64>,
     ) -> Self {
         Self {
             zero,
@@ -1588,18 +1583,7 @@ impl NumberEdgeCases {
 
 impl Default for NumberEdgeCases {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, None, None)
     }
 }
 
@@ -1760,33 +1744,33 @@ impl baml_client_rust::types::FromBamlValue for NumberEdgeCases {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct OptionalEverything {
-    pub optString: String,
+    pub optString: Option<String>,
 
-    pub optInt: String,
+    pub optInt: Option<i64>,
 
-    pub optFloat: String,
+    pub optFloat: Option<f64>,
 
-    pub optBool: String,
+    pub optBool: Option<bool>,
 
-    pub optArray: String,
+    pub optArray: Option<Vec<String>>,
 
-    pub optMap: String,
+    pub optMap: Option<std::collections::HashMap<String, String>>,
 
-    pub optObject: String,
+    pub optObject: Option<crate::typesUser>,
 }
 
 impl OptionalEverything {
     /// Create a new OptionalEverything instance
     pub fn new(
-        optString: String,
-        optInt: String,
-        optFloat: String,
-        optBool: String,
-        optArray: String,
-        optMap: String,
-        optObject: String,
+        optString: Option<String>,
+        optInt: Option<i64>,
+        optFloat: Option<f64>,
+        optBool: Option<bool>,
+        optArray: Option<Vec<String>>,
+        optMap: Option<std::collections::HashMap<String, String>>,
+        optObject: Option<crate::typesUser>,
     ) -> Self {
         Self {
             optString,
@@ -1802,15 +1786,7 @@ impl OptionalEverything {
 
 impl Default for OptionalEverything {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(None, None, None, None, None, None, None)
     }
 }
 
@@ -1920,21 +1896,21 @@ impl baml_client_rust::types::FromBamlValue for OptionalEverything {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct OuterNullable {
-    pub inner: String,
+    pub inner: Option<crate::typesInnerNullable>,
 }
 
 impl OuterNullable {
     /// Create a new OuterNullable instance
-    pub fn new(inner: String) -> Self {
+    pub fn new(inner: Option<crate::typesInnerNullable>) -> Self {
         Self { inner }
     }
 }
 
 impl Default for OuterNullable {
     fn default() -> Self {
-        Self::new(String::new())
+        Self::new(None)
     }
 }
 
@@ -1976,24 +1952,24 @@ impl baml_client_rust::types::FromBamlValue for OuterNullable {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SomeNullable {
-    pub presentString: String,
+    pub presentString: Option<String>,
 
-    pub nullString: String,
+    pub nullString: Option<String>,
 
-    pub presentInt: String,
+    pub presentInt: Option<i64>,
 
-    pub nullInt: String,
+    pub nullInt: Option<i64>,
 }
 
 impl SomeNullable {
     /// Create a new SomeNullable instance
     pub fn new(
-        presentString: String,
-        nullString: String,
-        presentInt: String,
-        nullInt: String,
+        presentString: Option<String>,
+        nullString: Option<String>,
+        presentInt: Option<i64>,
+        nullInt: Option<i64>,
     ) -> Self {
         Self {
             presentString,
@@ -2006,7 +1982,7 @@ impl SomeNullable {
 
 impl Default for SomeNullable {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(None, None, None, None)
     }
 }
 
@@ -2084,7 +2060,7 @@ impl baml_client_rust::types::FromBamlValue for SomeNullable {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SpecialCharacters {
     pub normalText: String,
 
@@ -2276,23 +2252,23 @@ impl baml_client_rust::types::FromBamlValue for SpecialCharacters {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 }
 
 impl User {
     /// Create a new User instance
-    pub fn new(id: String, name: String) -> Self {
+    pub fn new(id: i64, name: String) -> Self {
         Self { id, name }
     }
 }
 
 impl Default for User {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(0, String::new())
     }
 }
 
@@ -2345,7 +2321,7 @@ impl baml_client_rust::types::FromBamlValue for User {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct VeryLongStrings {
     pub shortString: String,
 
@@ -2634,5 +2610,40 @@ impl std::fmt::Display for Union3BoolOrIntOrString {
             Self::Int(v) => write!(f, "Int({:?})", v),
             Self::Bool(v) => write!(f, "Bool({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3BoolOrIntOrString {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Bool(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3BoolOrIntOrString {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Bool variant
+        if let Ok(variant_value) = bool::from_baml_value(value.clone()) {
+            return Ok(Self::Bool(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3BoolOrIntOrString",
+            value
+        )))
     }
 }

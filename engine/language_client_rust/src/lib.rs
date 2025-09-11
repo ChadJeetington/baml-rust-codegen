@@ -12,7 +12,7 @@ pub mod types;
 pub mod ffi;
 
 // Re-export main types
-pub use client::{BamlClient, BamlClientBuilder};
+pub use client::{BamlClient, BamlClientBuilder, CoreClient};
 pub use context::BamlContext;
 pub use types::RuntimeContextManager;
 pub use errors::{BamlError, BamlErrorType};

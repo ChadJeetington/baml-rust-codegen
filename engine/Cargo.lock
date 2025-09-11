@@ -953,10 +953,9 @@ version = "0.205.0"
 dependencies = [
  "anyhow",
  "baml-types",
+ "baml_cffi",
  "futures",
  "indexmap 2.10.0",
- "libc",
- "libloading",
  "once_cell",
  "serde",
  "serde_json",

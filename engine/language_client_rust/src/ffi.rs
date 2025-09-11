@@ -13,3 +13,17 @@ pub use baml_cffi::{
 
 // Re-export the protobuf types
 pub use baml_cffi::baml;
+
+/// Get the version of the BAML library
+pub fn get_library_version() -> Result<String, String> {
+    let version_ptr = version();
+    if version_ptr.is_null() {
+        return Err("Failed to get library version".to_string());
+    }
+    let version = unsafe {
+        std::ffi::CStr::from_ptr(version_ptr)
+            .to_str()
+            .map_err(|e| format!("Invalid UTF-8 in version string: {}", e))?
+    };
+    Ok(version.to_string())
+}

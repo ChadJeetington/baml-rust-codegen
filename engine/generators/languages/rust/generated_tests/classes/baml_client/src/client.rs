@@ -60,8 +60,8 @@ impl BamlClient {
     /// ConsumeSimpleClass - Generated BAML function
     pub async fn consume_simple_class(
         &self,
-        item: crate::types::SimpleClass,
-    ) -> BamlResult<crate::types::SimpleClass> {
+        item: crate::typesSimpleClass,
+    ) -> BamlResult<crate::typesSimpleClass> {
         let mut context = BamlContext::new();
         context = context.set_arg("item", item)?;
 
@@ -73,10 +73,10 @@ impl BamlClient {
     /// ConsumeSimpleClass (streaming) - Generated BAML function  
     pub async fn consume_simple_class_stream(
         &self,
-        item: crate::types::SimpleClass,
+        item: crate::typesSimpleClass,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleClass>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleClass>>,
             > + Send
             + Sync,
     > {
@@ -90,7 +90,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// MakeSimpleClass - Generated BAML function
-    pub async fn make_simple_class(&self) -> BamlResult<crate::types::SimpleClass> {
+    pub async fn make_simple_class(&self) -> BamlResult<crate::typesSimpleClass> {
         let mut context = BamlContext::new();
 
         self.client.call_function("MakeSimpleClass", context).await
@@ -101,7 +101,7 @@ impl BamlClient {
         &self,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleClass>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleClass>>,
             > + Send
             + Sync,
     > {

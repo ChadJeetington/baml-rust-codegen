@@ -14,7 +14,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Address {
     pub street: String,
 
@@ -26,7 +26,7 @@ pub struct Address {
 
     pub postalCode: String,
 
-    pub coordinates: String,
+    pub coordinates: Option<crate::typesCoordinates>,
 }
 
 impl Address {
@@ -37,7 +37,7 @@ impl Address {
         state: String,
         country: String,
         postalCode: String,
-        coordinates: String,
+        coordinates: Option<crate::typesCoordinates>,
     ) -> Self {
         Self {
             street,
@@ -58,7 +58,7 @@ impl Default for Address {
             String::new(),
             String::new(),
             String::new(),
-            String::new(),
+            None,
         )
     }
 }
@@ -163,20 +163,20 @@ impl baml_client_rust::types::FromBamlValue for Address {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Approval {
     pub approver: String,
 
     pub date: String,
 
-    pub amount: String,
+    pub amount: f64,
 
-    pub notes: String,
+    pub notes: Option<String>,
 }
 
 impl Approval {
     /// Create a new Approval instance
-    pub fn new(approver: String, date: String, amount: String, notes: String) -> Self {
+    pub fn new(approver: String, date: String, amount: f64, notes: Option<String>) -> Self {
         Self {
             approver,
             date,
@@ -188,7 +188,7 @@ impl Approval {
 
 impl Default for Approval {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(String::new(), String::new(), 0.0, None)
     }
 }
 
@@ -263,20 +263,25 @@ impl baml_client_rust::types::FromBamlValue for Approval {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Budget {
-    pub total: String,
+    pub total: f64,
 
-    pub spent: String,
+    pub spent: f64,
 
-    pub categories: String,
+    pub categories: std::collections::HashMap<String, f64>,
 
-    pub approvals: String,
+    pub approvals: Vec<crate::typesApproval>,
 }
 
 impl Budget {
     /// Create a new Budget instance
-    pub fn new(total: String, spent: String, categories: String, approvals: String) -> Self {
+    pub fn new(
+        total: f64,
+        spent: f64,
+        categories: std::collections::HashMap<String, f64>,
+        approvals: Vec<crate::typesApproval>,
+    ) -> Self {
         Self {
             total,
             spent,
@@ -288,7 +293,7 @@ impl Budget {
 
 impl Default for Budget {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(0.0, 0.0, std::collections::HashMap::new(), Vec::new())
     }
 }
 
@@ -363,27 +368,27 @@ impl baml_client_rust::types::FromBamlValue for Budget {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Company {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
-    pub address: String,
+    pub address: crate::typesAddress,
 
-    pub departments: String,
+    pub departments: Vec<crate::typesDepartment>,
 
-    pub metadata: String,
+    pub metadata: crate::typesCompanyMetadata,
 }
 
 impl Company {
     /// Create a new Company instance
     pub fn new(
-        id: String,
+        id: i64,
         name: String,
-        address: String,
-        departments: String,
-        metadata: String,
+        address: crate::typesAddress,
+        departments: Vec<crate::typesDepartment>,
+        metadata: crate::typesCompanyMetadata,
     ) -> Self {
         Self {
             id,
@@ -398,11 +403,11 @@ impl Company {
 impl Default for Company {
     fn default() -> Self {
         Self::new(
+            0,
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            crate::typesAddress::default(),
+            Vec::new(),
+            crate::typesCompanyMetadata::default(),
         )
     }
 }
@@ -489,17 +494,17 @@ impl baml_client_rust::types::FromBamlValue for Company {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct CompanyMetadata {
     pub founded: String,
 
     pub industry: String,
 
-    pub size: String,
+    pub size: crate::typesUnion4KenterpriseOrKlargeOrKmediumOrKsmall,
 
-    pub certifications: String,
+    pub certifications: Vec<String>,
 
-    pub partnerships: String,
+    pub partnerships: Option<Vec<crate::typesCompany>>,
 }
 
 impl CompanyMetadata {
@@ -507,9 +512,9 @@ impl CompanyMetadata {
     pub fn new(
         founded: String,
         industry: String,
-        size: String,
-        certifications: String,
-        partnerships: String,
+        size: crate::typesUnion4KenterpriseOrKlargeOrKmediumOrKsmall,
+        certifications: Vec<String>,
+        partnerships: Option<Vec<crate::typesCompany>>,
     ) -> Self {
         Self {
             founded,
@@ -526,9 +531,9 @@ impl Default for CompanyMetadata {
         Self::new(
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            crate::typesUnion4KenterpriseOrKlargeOrKmediumOrKsmall::default(),
+            Vec::new(),
+            None,
         )
     }
 }
@@ -627,18 +632,22 @@ impl baml_client_rust::types::FromBamlValue for CompanyMetadata {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ComplexNested {
-    pub company: String,
+    pub company: crate::typesCompany,
 
-    pub employees: String,
+    pub employees: Vec<crate::typesEmployee>,
 
-    pub projects: String,
+    pub projects: Vec<crate::typesProject>,
 }
 
 impl ComplexNested {
     /// Create a new ComplexNested instance
-    pub fn new(company: String, employees: String, projects: String) -> Self {
+    pub fn new(
+        company: crate::typesCompany,
+        employees: Vec<crate::typesEmployee>,
+        projects: Vec<crate::typesProject>,
+    ) -> Self {
         Self {
             company,
             employees,
@@ -649,7 +658,7 @@ impl ComplexNested {
 
 impl Default for ComplexNested {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(crate::typesCompany::default(), Vec::new(), Vec::new())
     }
 }
 
@@ -713,7 +722,7 @@ impl baml_client_rust::types::FromBamlValue for ComplexNested {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Contact {
     pub name: String,
 
@@ -721,12 +730,12 @@ pub struct Contact {
 
     pub phone: String,
 
-    pub email: String,
+    pub email: Option<String>,
 }
 
 impl Contact {
     /// Create a new Contact instance
-    pub fn new(name: String, relationship: String, phone: String, email: String) -> Self {
+    pub fn new(name: String, relationship: String, phone: String, email: Option<String>) -> Self {
         Self {
             name,
             relationship,
@@ -738,7 +747,7 @@ impl Contact {
 
 impl Default for Contact {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(String::new(), String::new(), String::new(), None)
     }
 }
 
@@ -816,16 +825,16 @@ impl baml_client_rust::types::FromBamlValue for Contact {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Coordinates {
-    pub latitude: String,
+    pub latitude: f64,
 
-    pub longitude: String,
+    pub longitude: f64,
 }
 
 impl Coordinates {
     /// Create a new Coordinates instance
-    pub fn new(latitude: String, longitude: String) -> Self {
+    pub fn new(latitude: f64, longitude: f64) -> Self {
         Self {
             latitude,
             longitude,
@@ -835,7 +844,7 @@ impl Coordinates {
 
 impl Default for Coordinates {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(0.0, 0.0)
     }
 }
 
@@ -888,21 +897,21 @@ impl baml_client_rust::types::FromBamlValue for Coordinates {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DeeplyNested {
-    pub level1: String,
+    pub level1: crate::typesLevel1,
 }
 
 impl DeeplyNested {
     /// Create a new DeeplyNested instance
-    pub fn new(level1: String) -> Self {
+    pub fn new(level1: crate::typesLevel1) -> Self {
         Self { level1 }
     }
 }
 
 impl Default for DeeplyNested {
     fn default() -> Self {
-        Self::new(String::new())
+        Self::new(crate::typesLevel1::default())
     }
 }
 
@@ -944,30 +953,30 @@ impl baml_client_rust::types::FromBamlValue for DeeplyNested {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Department {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
-    pub manager: String,
+    pub manager: Option<crate::typesEmployee>,
 
-    pub members: String,
+    pub members: Vec<crate::typesEmployee>,
 
-    pub budget: String,
+    pub budget: f64,
 
-    pub projects: String,
+    pub projects: Vec<crate::typesProject>,
 }
 
 impl Department {
     /// Create a new Department instance
     pub fn new(
-        id: String,
+        id: i64,
         name: String,
-        manager: String,
-        members: String,
-        budget: String,
-        projects: String,
+        manager: Option<crate::typesEmployee>,
+        members: Vec<crate::typesEmployee>,
+        budget: f64,
+        projects: Vec<crate::typesProject>,
     ) -> Self {
         Self {
             id,
@@ -982,14 +991,7 @@ impl Department {
 
 impl Default for Department {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(0, String::new(), None, Vec::new(), 0.0, Vec::new())
     }
 }
 
@@ -1086,18 +1088,18 @@ impl baml_client_rust::types::FromBamlValue for Department {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DisplaySettings {
-    pub fontSize: String,
+    pub fontSize: i64,
 
     pub colorScheme: String,
 
-    pub layout: String,
+    pub layout: crate::typesUnion2KgridOrKlist,
 }
 
 impl DisplaySettings {
     /// Create a new DisplaySettings instance
-    pub fn new(fontSize: String, colorScheme: String, layout: String) -> Self {
+    pub fn new(fontSize: i64, colorScheme: String, layout: crate::typesUnion2KgridOrKlist) -> Self {
         Self {
             fontSize,
             colorScheme,
@@ -1108,7 +1110,7 @@ impl DisplaySettings {
 
 impl Default for DisplaySettings {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(0, String::new(), crate::typesUnion2KgridOrKlist::default())
     }
 }
 
@@ -1172,9 +1174,9 @@ impl baml_client_rust::types::FromBamlValue for DisplaySettings {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Employee {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
@@ -1184,24 +1186,24 @@ pub struct Employee {
 
     pub department: String,
 
-    pub skills: String,
+    pub skills: Vec<String>,
 
-    pub address: String,
+    pub address: Option<crate::typesAddress>,
 
-    pub emergencyContact: String,
+    pub emergencyContact: Option<crate::typesContact>,
 }
 
 impl Employee {
     /// Create a new Employee instance
     pub fn new(
-        id: String,
+        id: i64,
         name: String,
         email: String,
         role: String,
         department: String,
-        skills: String,
-        address: String,
-        emergencyContact: String,
+        skills: Vec<String>,
+        address: Option<crate::typesAddress>,
+        emergencyContact: Option<crate::typesContact>,
     ) -> Self {
         Self {
             id,
@@ -1219,14 +1221,14 @@ impl Employee {
 impl Default for Employee {
     fn default() -> Self {
         Self::new(
+            0,
             String::new(),
             String::new(),
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            Vec::new(),
+            None,
+            None,
         )
     }
 }
@@ -1358,23 +1360,23 @@ impl baml_client_rust::types::FromBamlValue for Employee {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Level1 {
     pub data: String,
 
-    pub level2: String,
+    pub level2: crate::typesLevel2,
 }
 
 impl Level1 {
     /// Create a new Level1 instance
-    pub fn new(data: String, level2: String) -> Self {
+    pub fn new(data: String, level2: crate::typesLevel2) -> Self {
         Self { data, level2 }
     }
 }
 
 impl Default for Level1 {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(String::new(), crate::typesLevel2::default())
     }
 }
 
@@ -1427,23 +1429,23 @@ impl baml_client_rust::types::FromBamlValue for Level1 {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Level2 {
     pub data: String,
 
-    pub level3: String,
+    pub level3: crate::typesLevel3,
 }
 
 impl Level2 {
     /// Create a new Level2 instance
-    pub fn new(data: String, level3: String) -> Self {
+    pub fn new(data: String, level3: crate::typesLevel3) -> Self {
         Self { data, level3 }
     }
 }
 
 impl Default for Level2 {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(String::new(), crate::typesLevel3::default())
     }
 }
 
@@ -1496,23 +1498,23 @@ impl baml_client_rust::types::FromBamlValue for Level2 {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Level3 {
     pub data: String,
 
-    pub level4: String,
+    pub level4: crate::typesLevel4,
 }
 
 impl Level3 {
     /// Create a new Level3 instance
-    pub fn new(data: String, level4: String) -> Self {
+    pub fn new(data: String, level4: crate::typesLevel4) -> Self {
         Self { data, level4 }
     }
 }
 
 impl Default for Level3 {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(String::new(), crate::typesLevel4::default())
     }
 }
 
@@ -1565,23 +1567,23 @@ impl baml_client_rust::types::FromBamlValue for Level3 {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Level4 {
     pub data: String,
 
-    pub level5: String,
+    pub level5: crate::typesLevel5,
 }
 
 impl Level4 {
     /// Create a new Level4 instance
-    pub fn new(data: String, level5: String) -> Self {
+    pub fn new(data: String, level5: crate::typesLevel5) -> Self {
         Self { data, level5 }
     }
 }
 
 impl Default for Level4 {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(String::new(), crate::typesLevel5::default())
     }
 }
 
@@ -1634,18 +1636,22 @@ impl baml_client_rust::types::FromBamlValue for Level4 {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Level5 {
     pub data: String,
 
-    pub items: String,
+    pub items: Vec<String>,
 
-    pub mapping: String,
+    pub mapping: std::collections::HashMap<String, i64>,
 }
 
 impl Level5 {
     /// Create a new Level5 instance
-    pub fn new(data: String, items: String, mapping: String) -> Self {
+    pub fn new(
+        data: String,
+        items: Vec<String>,
+        mapping: std::collections::HashMap<String, i64>,
+    ) -> Self {
         Self {
             data,
             items,
@@ -1656,7 +1662,7 @@ impl Level5 {
 
 impl Default for Level5 {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(String::new(), Vec::new(), std::collections::HashMap::new())
     }
 }
 
@@ -1720,17 +1726,17 @@ impl baml_client_rust::types::FromBamlValue for Level5 {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {
     pub createdAt: String,
 
     pub updatedAt: String,
 
-    pub version: String,
+    pub version: i64,
 
-    pub tags: String,
+    pub tags: Vec<String>,
 
-    pub attributes: String,
+    pub attributes: std::collections::HashMap<String, String>,
 }
 
 impl Metadata {
@@ -1738,9 +1744,9 @@ impl Metadata {
     pub fn new(
         createdAt: String,
         updatedAt: String,
-        version: String,
-        tags: String,
-        attributes: String,
+        version: i64,
+        tags: Vec<String>,
+        attributes: std::collections::HashMap<String, String>,
     ) -> Self {
         Self {
             createdAt,
@@ -1757,9 +1763,9 @@ impl Default for Metadata {
         Self::new(
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            0,
+            Vec::new(),
+            std::collections::HashMap::new(),
         )
     }
 }
@@ -1846,27 +1852,27 @@ impl baml_client_rust::types::FromBamlValue for Metadata {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Milestone {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
     pub dueDate: String,
 
-    pub completed: String,
+    pub completed: bool,
 
-    pub tasks: String,
+    pub tasks: Vec<crate::typesTask>,
 }
 
 impl Milestone {
     /// Create a new Milestone instance
     pub fn new(
-        id: String,
+        id: i64,
         name: String,
         dueDate: String,
-        completed: String,
-        tasks: String,
+        completed: bool,
+        tasks: Vec<crate::typesTask>,
     ) -> Self {
         Self {
             id,
@@ -1880,13 +1886,7 @@ impl Milestone {
 
 impl Default for Milestone {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(0, String::new(), String::new(), false, Vec::new())
     }
 }
 
@@ -1972,20 +1972,25 @@ impl baml_client_rust::types::FromBamlValue for Milestone {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NotificationSettings {
-    pub email: String,
+    pub email: bool,
 
-    pub push: String,
+    pub push: bool,
 
-    pub sms: String,
+    pub sms: bool,
 
-    pub frequency: String,
+    pub frequency: crate::typesUnion3KdailyOrKimmediateOrKweekly,
 }
 
 impl NotificationSettings {
     /// Create a new NotificationSettings instance
-    pub fn new(email: String, push: String, sms: String, frequency: String) -> Self {
+    pub fn new(
+        email: bool,
+        push: bool,
+        sms: bool,
+        frequency: crate::typesUnion3KdailyOrKimmediateOrKweekly,
+    ) -> Self {
         Self {
             email,
             push,
@@ -1997,7 +2002,12 @@ impl NotificationSettings {
 
 impl Default for NotificationSettings {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(
+            false,
+            false,
+            false,
+            crate::typesUnion3KdailyOrKimmediateOrKweekly::default(),
+        )
     }
 }
 
@@ -2072,18 +2082,22 @@ impl baml_client_rust::types::FromBamlValue for NotificationSettings {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Preferences {
-    pub theme: String,
+    pub theme: crate::typesUnion2KdarkOrKlight,
 
     pub language: String,
 
-    pub notifications: String,
+    pub notifications: crate::typesNotificationSettings,
 }
 
 impl Preferences {
     /// Create a new Preferences instance
-    pub fn new(theme: String, language: String, notifications: String) -> Self {
+    pub fn new(
+        theme: crate::typesUnion2KdarkOrKlight,
+        language: String,
+        notifications: crate::typesNotificationSettings,
+    ) -> Self {
         Self {
             theme,
             language,
@@ -2094,7 +2108,11 @@ impl Preferences {
 
 impl Default for Preferences {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            crate::typesUnion2KdarkOrKlight::default(),
+            String::new(),
+            crate::typesNotificationSettings::default(),
+        )
     }
 }
 
@@ -2161,18 +2179,22 @@ impl baml_client_rust::types::FromBamlValue for Preferences {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct PrivacySettings {
-    pub profileVisibility: String,
+    pub profileVisibility: crate::typesUnion3KfriendsOrKprivateOrKpublic,
 
-    pub showEmail: String,
+    pub showEmail: bool,
 
-    pub showPhone: String,
+    pub showPhone: bool,
 }
 
 impl PrivacySettings {
     /// Create a new PrivacySettings instance
-    pub fn new(profileVisibility: String, showEmail: String, showPhone: String) -> Self {
+    pub fn new(
+        profileVisibility: crate::typesUnion3KfriendsOrKprivateOrKpublic,
+        showEmail: bool,
+        showPhone: bool,
+    ) -> Self {
         Self {
             profileVisibility,
             showEmail,
@@ -2183,7 +2205,11 @@ impl PrivacySettings {
 
 impl Default for PrivacySettings {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            crate::typesUnion3KfriendsOrKprivateOrKpublic::default(),
+            false,
+            false,
+        )
     }
 }
 
@@ -2250,20 +2276,25 @@ impl baml_client_rust::types::FromBamlValue for PrivacySettings {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Profile {
     pub bio: String,
 
     pub avatar: String,
 
-    pub social: String,
+    pub social: crate::typesSocialLinks,
 
-    pub preferences: String,
+    pub preferences: crate::typesPreferences,
 }
 
 impl Profile {
     /// Create a new Profile instance
-    pub fn new(bio: String, avatar: String, social: String, preferences: String) -> Self {
+    pub fn new(
+        bio: String,
+        avatar: String,
+        social: crate::typesSocialLinks,
+        preferences: crate::typesPreferences,
+    ) -> Self {
         Self {
             bio,
             avatar,
@@ -2275,7 +2306,12 @@ impl Profile {
 
 impl Default for Profile {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(
+            String::new(),
+            String::new(),
+            crate::typesSocialLinks::default(),
+            crate::typesPreferences::default(),
+        )
     }
 }
 
@@ -2350,33 +2386,33 @@ impl baml_client_rust::types::FromBamlValue for Profile {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Project {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
     pub description: String,
 
-    pub status: String,
+    pub status: crate::typesUnion4KactiveOrKcancelledOrKcompletedOrKplanning,
 
-    pub team: String,
+    pub team: Vec<crate::typesEmployee>,
 
-    pub milestones: String,
+    pub milestones: Vec<crate::typesMilestone>,
 
-    pub budget: String,
+    pub budget: crate::typesBudget,
 }
 
 impl Project {
     /// Create a new Project instance
     pub fn new(
-        id: String,
+        id: i64,
         name: String,
         description: String,
-        status: String,
-        team: String,
-        milestones: String,
-        budget: String,
+        status: crate::typesUnion4KactiveOrKcancelledOrKcompletedOrKplanning,
+        team: Vec<crate::typesEmployee>,
+        milestones: Vec<crate::typesMilestone>,
+        budget: crate::typesBudget,
     ) -> Self {
         Self {
             id,
@@ -2393,13 +2429,13 @@ impl Project {
 impl Default for Project {
     fn default() -> Self {
         Self::new(
+            0,
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            crate::typesUnion4KactiveOrKcancelledOrKcompletedOrKplanning::default(),
+            Vec::new(),
+            Vec::new(),
+            crate::typesBudget::default(),
         )
     }
 }
@@ -2516,27 +2552,27 @@ impl baml_client_rust::types::FromBamlValue for Project {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct RecursiveStructure {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
-    pub children: String,
+    pub children: Vec<crate::typesRecursiveStructure>,
 
-    pub parent: String,
+    pub parent: Option<crate::typesRecursiveStructure>,
 
-    pub metadata: String,
+    pub metadata: std::collections::HashMap<String, crate::typesUnion3BoolOrIntOrString>,
 }
 
 impl RecursiveStructure {
     /// Create a new RecursiveStructure instance
     pub fn new(
-        id: String,
+        id: i64,
         name: String,
-        children: String,
-        parent: String,
-        metadata: String,
+        children: Vec<crate::typesRecursiveStructure>,
+        parent: Option<crate::typesRecursiveStructure>,
+        metadata: std::collections::HashMap<String, crate::typesUnion3BoolOrIntOrString>,
     ) -> Self {
         Self {
             id,
@@ -2551,11 +2587,11 @@ impl RecursiveStructure {
 impl Default for RecursiveStructure {
     fn default() -> Self {
         Self::new(
+            0,
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            Vec::new(),
+            None,
+            std::collections::HashMap::new(),
         )
     }
 }
@@ -2642,18 +2678,22 @@ impl baml_client_rust::types::FromBamlValue for RecursiveStructure {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SimpleNested {
-    pub user: String,
+    pub user: crate::typesUser,
 
-    pub address: String,
+    pub address: crate::typesAddress,
 
-    pub metadata: String,
+    pub metadata: crate::typesMetadata,
 }
 
 impl SimpleNested {
     /// Create a new SimpleNested instance
-    pub fn new(user: String, address: String, metadata: String) -> Self {
+    pub fn new(
+        user: crate::typesUser,
+        address: crate::typesAddress,
+        metadata: crate::typesMetadata,
+    ) -> Self {
         Self {
             user,
             address,
@@ -2664,7 +2704,11 @@ impl SimpleNested {
 
 impl Default for SimpleNested {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            crate::typesUser::default(),
+            crate::typesAddress::default(),
+            crate::typesMetadata::default(),
+        )
     }
 }
 
@@ -2728,20 +2772,25 @@ impl baml_client_rust::types::FromBamlValue for SimpleNested {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SocialLinks {
-    pub twitter: String,
+    pub twitter: Option<String>,
 
-    pub github: String,
+    pub github: Option<String>,
 
-    pub linkedin: String,
+    pub linkedin: Option<String>,
 
-    pub website: String,
+    pub website: Option<String>,
 }
 
 impl SocialLinks {
     /// Create a new SocialLinks instance
-    pub fn new(twitter: String, github: String, linkedin: String, website: String) -> Self {
+    pub fn new(
+        twitter: Option<String>,
+        github: Option<String>,
+        linkedin: Option<String>,
+        website: Option<String>,
+    ) -> Self {
         Self {
             twitter,
             github,
@@ -2753,7 +2802,7 @@ impl SocialLinks {
 
 impl Default for SocialLinks {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(None, None, None, None)
     }
 }
 
@@ -2828,9 +2877,9 @@ impl baml_client_rust::types::FromBamlValue for SocialLinks {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Task {
-    pub id: String,
+    pub id: i64,
 
     pub title: String,
 
@@ -2838,23 +2887,23 @@ pub struct Task {
 
     pub assignee: String,
 
-    pub priority: String,
+    pub priority: crate::typesUnion3KhighOrKlowOrKmedium,
 
-    pub status: String,
+    pub status: crate::typesUnion3KdoneOrKin_progressOrKtodo,
 
-    pub subtasks: String,
+    pub subtasks: Option<Vec<crate::typesTask>>,
 }
 
 impl Task {
     /// Create a new Task instance
     pub fn new(
-        id: String,
+        id: i64,
         title: String,
         description: String,
         assignee: String,
-        priority: String,
-        status: String,
-        subtasks: String,
+        priority: crate::typesUnion3KhighOrKlowOrKmedium,
+        status: crate::typesUnion3KdoneOrKin_progressOrKtodo,
+        subtasks: Option<Vec<crate::typesTask>>,
     ) -> Self {
         Self {
             id,
@@ -2871,13 +2920,13 @@ impl Task {
 impl Default for Task {
     fn default() -> Self {
         Self::new(
+            0,
             String::new(),
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            crate::typesUnion3KhighOrKlowOrKmedium::default(),
+            crate::typesUnion3KdoneOrKin_progressOrKtodo::default(),
+            None,
         )
     }
 }
@@ -2994,20 +3043,25 @@ impl baml_client_rust::types::FromBamlValue for Task {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
-    pub profile: String,
+    pub profile: crate::typesProfile,
 
-    pub settings: String,
+    pub settings: crate::typesUserSettings,
 }
 
 impl User {
     /// Create a new User instance
-    pub fn new(id: String, name: String, profile: String, settings: String) -> Self {
+    pub fn new(
+        id: i64,
+        name: String,
+        profile: crate::typesProfile,
+        settings: crate::typesUserSettings,
+    ) -> Self {
         Self {
             id,
             name,
@@ -3019,7 +3073,12 @@ impl User {
 
 impl Default for User {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(
+            0,
+            String::new(),
+            crate::typesProfile::default(),
+            crate::typesUserSettings::default(),
+        )
     }
 }
 
@@ -3094,18 +3153,22 @@ impl baml_client_rust::types::FromBamlValue for User {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct UserSettings {
-    pub privacy: String,
+    pub privacy: crate::typesPrivacySettings,
 
-    pub display: String,
+    pub display: crate::typesDisplaySettings,
 
-    pub advanced: String,
+    pub advanced: std::collections::HashMap<String, String>,
 }
 
 impl UserSettings {
     /// Create a new UserSettings instance
-    pub fn new(privacy: String, display: String, advanced: String) -> Self {
+    pub fn new(
+        privacy: crate::typesPrivacySettings,
+        display: crate::typesDisplaySettings,
+        advanced: std::collections::HashMap<String, String>,
+    ) -> Self {
         Self {
             privacy,
             display,
@@ -3116,7 +3179,11 @@ impl UserSettings {
 
 impl Default for UserSettings {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            crate::typesPrivacySettings::default(),
+            crate::typesDisplaySettings::default(),
+            std::collections::HashMap::new(),
+        )
     }
 }
 
@@ -3292,6 +3359,36 @@ impl std::fmt::Display for Union2KdarkOrKlight {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union2KdarkOrKlight {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union2KdarkOrKlight {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union2KdarkOrKlight",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union2KgridOrKlist {
@@ -3401,6 +3498,36 @@ impl std::fmt::Display for Union2KgridOrKlist {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union2KgridOrKlist {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union2KgridOrKlist {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union2KgridOrKlist",
+            value
+        )))
     }
 }
 
@@ -3555,6 +3682,41 @@ impl std::fmt::Display for Union3BoolOrIntOrString {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3BoolOrIntOrString {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Bool(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3BoolOrIntOrString {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Bool variant
+        if let Ok(variant_value) = bool::from_baml_value(value.clone()) {
+            return Ok(Self::Bool(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3BoolOrIntOrString",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3KdailyOrKimmediateOrKweekly {
@@ -3703,6 +3865,41 @@ impl std::fmt::Display for Union3KdailyOrKimmediateOrKweekly {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KdailyOrKimmediateOrKweekly {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KdailyOrKimmediateOrKweekly {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KdailyOrKimmediateOrKweekly",
+            value
+        )))
     }
 }
 
@@ -3857,6 +4054,41 @@ impl std::fmt::Display for Union3KdoneOrKin_progressOrKtodo {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KdoneOrKin_progressOrKtodo {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KdoneOrKin_progressOrKtodo {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KdoneOrKin_progressOrKtodo",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3KfriendsOrKprivateOrKpublic {
@@ -4008,6 +4240,41 @@ impl std::fmt::Display for Union3KfriendsOrKprivateOrKpublic {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KfriendsOrKprivateOrKpublic {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KfriendsOrKprivateOrKpublic {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KfriendsOrKprivateOrKpublic",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3KhighOrKlowOrKmedium {
@@ -4156,6 +4423,41 @@ impl std::fmt::Display for Union3KhighOrKlowOrKmedium {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KhighOrKlowOrKmedium {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KhighOrKlowOrKmedium {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KhighOrKlowOrKmedium",
+            value
+        )))
     }
 }
 
@@ -4349,6 +4651,46 @@ impl std::fmt::Display for Union4KactiveOrKcancelledOrKcompletedOrKplanning {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union4KactiveOrKcancelledOrKcompletedOrKplanning {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union4KactiveOrKcancelledOrKcompletedOrKplanning {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union4KactiveOrKcancelledOrKcompletedOrKplanning",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union4KenterpriseOrKlargeOrKmediumOrKsmall {
@@ -4536,5 +4878,45 @@ impl std::fmt::Display for Union4KenterpriseOrKlargeOrKmediumOrKsmall {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union4KenterpriseOrKlargeOrKmediumOrKsmall {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union4KenterpriseOrKlargeOrKmediumOrKsmall {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union4KenterpriseOrKlargeOrKmediumOrKsmall",
+            value
+        )))
     }
 }

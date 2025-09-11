@@ -14,18 +14,22 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BooleanLiterals {
-    pub alwaysTrue: String,
+    pub alwaysTrue: bool,
 
-    pub alwaysFalse: String,
+    pub alwaysFalse: bool,
 
-    pub eitherBool: String,
+    pub eitherBool: crate::typesUnion2BoolKFalseOrBoolKTrue,
 }
 
 impl BooleanLiterals {
     /// Create a new BooleanLiterals instance
-    pub fn new(alwaysTrue: String, alwaysFalse: String, eitherBool: String) -> Self {
+    pub fn new(
+        alwaysTrue: bool,
+        alwaysFalse: bool,
+        eitherBool: crate::typesUnion2BoolKFalseOrBoolKTrue,
+    ) -> Self {
         Self {
             alwaysTrue,
             alwaysFalse,
@@ -36,7 +40,11 @@ impl BooleanLiterals {
 
 impl Default for BooleanLiterals {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            true,
+            false,
+            crate::typesUnion2BoolKFalseOrBoolKTrue::default(),
+        )
     }
 }
 
@@ -100,27 +108,27 @@ impl baml_client_rust::types::FromBamlValue for BooleanLiterals {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ComplexLiterals {
-    pub state: String,
+    pub state: crate::typesUnion4KarchivedOrKdeletedOrKdraftOrKpublished,
 
-    pub retryCount: String,
+    pub retryCount: crate::typesUnion7IntK0OrIntK1OrIntK13OrIntK2OrIntK3OrIntK5OrIntK8,
 
-    pub response: String,
+    pub response: crate::typesUnion3KerrorOrKsuccessOrKtimeout,
 
-    pub flags: String,
+    pub flags: Vec<crate::typesUnion2BoolKFalseOrBoolKTrue>,
 
-    pub codes: String,
+    pub codes: Vec<crate::typesUnion3IntK200OrIntK404OrIntK500>,
 }
 
 impl ComplexLiterals {
     /// Create a new ComplexLiterals instance
     pub fn new(
-        state: String,
-        retryCount: String,
-        response: String,
-        flags: String,
-        codes: String,
+        state: crate::typesUnion4KarchivedOrKdeletedOrKdraftOrKpublished,
+        retryCount: crate::typesUnion7IntK0OrIntK1OrIntK13OrIntK2OrIntK3OrIntK5OrIntK8,
+        response: crate::typesUnion3KerrorOrKsuccessOrKtimeout,
+        flags: Vec<crate::typesUnion2BoolKFalseOrBoolKTrue>,
+        codes: Vec<crate::typesUnion3IntK200OrIntK404OrIntK500>,
     ) -> Self {
         Self {
             state,
@@ -135,11 +143,11 @@ impl ComplexLiterals {
 impl Default for ComplexLiterals {
     fn default() -> Self {
         Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            crate::typesUnion4KarchivedOrKdeletedOrKdraftOrKpublished::default(),
+            crate::typesUnion7IntK0OrIntK1OrIntK13OrIntK2OrIntK3OrIntK5OrIntK8::default(),
+            crate::typesUnion3KerrorOrKsuccessOrKtimeout::default(),
+            Vec::new(),
+            Vec::new(),
         )
     }
 }
@@ -226,18 +234,22 @@ impl baml_client_rust::types::FromBamlValue for ComplexLiterals {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct IntegerLiterals {
-    pub priority: String,
+    pub priority: crate::typesUnion5IntK1OrIntK2OrIntK3OrIntK4OrIntK5,
 
-    pub httpStatus: String,
+    pub httpStatus: crate::typesUnion5IntK200OrIntK201OrIntK400OrIntK404OrIntK500,
 
-    pub maxRetries: String,
+    pub maxRetries: crate::typesUnion4IntK0OrIntK1OrIntK3OrIntK5,
 }
 
 impl IntegerLiterals {
     /// Create a new IntegerLiterals instance
-    pub fn new(priority: String, httpStatus: String, maxRetries: String) -> Self {
+    pub fn new(
+        priority: crate::typesUnion5IntK1OrIntK2OrIntK3OrIntK4OrIntK5,
+        httpStatus: crate::typesUnion5IntK200OrIntK201OrIntK400OrIntK404OrIntK500,
+        maxRetries: crate::typesUnion4IntK0OrIntK1OrIntK3OrIntK5,
+    ) -> Self {
         Self {
             priority,
             httpStatus,
@@ -248,7 +260,11 @@ impl IntegerLiterals {
 
 impl Default for IntegerLiterals {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            crate::typesUnion5IntK1OrIntK2OrIntK3OrIntK4OrIntK5::default(),
+            crate::typesUnion5IntK200OrIntK201OrIntK400OrIntK404OrIntK500::default(),
+            crate::typesUnion4IntK0OrIntK1OrIntK3OrIntK5::default(),
+        )
     }
 }
 
@@ -312,27 +328,27 @@ impl baml_client_rust::types::FromBamlValue for IntegerLiterals {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MixedLiterals {
-    pub id: String,
+    pub id: i64,
 
-    pub r#type: String,
+    pub r#type: crate::typesUnion3KadminOrKguestOrKuser,
 
-    pub level: String,
+    pub level: crate::typesUnion3IntK1OrIntK2OrIntK3,
 
-    pub isActive: String,
+    pub isActive: crate::typesUnion2BoolKFalseOrBoolKTrue,
 
-    pub apiVersion: String,
+    pub apiVersion: crate::typesUnion3Kv1OrKv2OrKv3,
 }
 
 impl MixedLiterals {
     /// Create a new MixedLiterals instance
     pub fn new(
-        id: String,
-        r#type: String,
-        level: String,
-        isActive: String,
-        apiVersion: String,
+        id: i64,
+        r#type: crate::typesUnion3KadminOrKguestOrKuser,
+        level: crate::typesUnion3IntK1OrIntK2OrIntK3,
+        isActive: crate::typesUnion2BoolKFalseOrBoolKTrue,
+        apiVersion: crate::typesUnion3Kv1OrKv2OrKv3,
     ) -> Self {
         Self {
             id,
@@ -347,11 +363,11 @@ impl MixedLiterals {
 impl Default for MixedLiterals {
     fn default() -> Self {
         Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            0,
+            crate::typesUnion3KadminOrKguestOrKuser::default(),
+            crate::typesUnion3IntK1OrIntK2OrIntK3::default(),
+            crate::typesUnion2BoolKFalseOrBoolKTrue::default(),
+            crate::typesUnion3Kv1OrKv2OrKv3::default(),
         )
     }
 }
@@ -438,18 +454,22 @@ impl baml_client_rust::types::FromBamlValue for MixedLiterals {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct StringLiterals {
-    pub status: String,
+    pub status: crate::typesUnion3KactiveOrKinactiveOrKpending,
 
-    pub environment: String,
+    pub environment: crate::typesUnion3KdevOrKprodOrKstaging,
 
-    pub method: String,
+    pub method: crate::typesUnion4KDELETEOrKGETOrKPOSTOrKPUT,
 }
 
 impl StringLiterals {
     /// Create a new StringLiterals instance
-    pub fn new(status: String, environment: String, method: String) -> Self {
+    pub fn new(
+        status: crate::typesUnion3KactiveOrKinactiveOrKpending,
+        environment: crate::typesUnion3KdevOrKprodOrKstaging,
+        method: crate::typesUnion4KDELETEOrKGETOrKPOSTOrKPUT,
+    ) -> Self {
         Self {
             status,
             environment,
@@ -460,7 +480,11 @@ impl StringLiterals {
 
 impl Default for StringLiterals {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(
+            crate::typesUnion3KactiveOrKinactiveOrKpending::default(),
+            crate::typesUnion3KdevOrKprodOrKstaging::default(),
+            crate::typesUnion4KDELETEOrKGETOrKPOSTOrKPUT::default(),
+        )
     }
 }
 
@@ -636,6 +660,36 @@ impl std::fmt::Display for Union2BoolKFalseOrBoolKTrue {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union2BoolKFalseOrBoolKTrue {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Bool(v) => v.to_baml_value(),
+            Self::Bool(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union2BoolKFalseOrBoolKTrue {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Bool variant
+        if let Ok(variant_value) = bool::from_baml_value(value.clone()) {
+            return Ok(Self::Bool(variant_value));
+        }
+        // Try Bool variant
+        if let Ok(variant_value) = bool::from_baml_value(value.clone()) {
+            return Ok(Self::Bool(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union2BoolKFalseOrBoolKTrue",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3IntK1OrIntK2OrIntK3 {
@@ -784,6 +838,41 @@ impl std::fmt::Display for Union3IntK1OrIntK2OrIntK3 {
             Self::Int(v) => write!(f, "Int({:?})", v),
             Self::Int(v) => write!(f, "Int({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3IntK1OrIntK2OrIntK3 {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3IntK1OrIntK2OrIntK3 {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3IntK1OrIntK2OrIntK3",
+            value
+        )))
     }
 }
 
@@ -938,6 +1027,41 @@ impl std::fmt::Display for Union3IntK200OrIntK404OrIntK500 {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3IntK200OrIntK404OrIntK500 {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3IntK200OrIntK404OrIntK500 {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3IntK200OrIntK404OrIntK500",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3KactiveOrKinactiveOrKpending {
@@ -1086,6 +1210,41 @@ impl std::fmt::Display for Union3KactiveOrKinactiveOrKpending {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KactiveOrKinactiveOrKpending {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KactiveOrKinactiveOrKpending {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KactiveOrKinactiveOrKpending",
+            value
+        )))
     }
 }
 
@@ -1240,6 +1399,41 @@ impl std::fmt::Display for Union3KadminOrKguestOrKuser {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KadminOrKguestOrKuser {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KadminOrKguestOrKuser {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KadminOrKguestOrKuser",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3KdevOrKprodOrKstaging {
@@ -1388,6 +1582,41 @@ impl std::fmt::Display for Union3KdevOrKprodOrKstaging {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KdevOrKprodOrKstaging {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KdevOrKprodOrKstaging {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KdevOrKprodOrKstaging",
+            value
+        )))
     }
 }
 
@@ -1542,6 +1771,41 @@ impl std::fmt::Display for Union3KerrorOrKsuccessOrKtimeout {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3KerrorOrKsuccessOrKtimeout {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3KerrorOrKsuccessOrKtimeout {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3KerrorOrKsuccessOrKtimeout",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3Kv1OrKv2OrKv3 {
@@ -1690,6 +1954,41 @@ impl std::fmt::Display for Union3Kv1OrKv2OrKv3 {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3Kv1OrKv2OrKv3 {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3Kv1OrKv2OrKv3 {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3Kv1OrKv2OrKv3",
+            value
+        )))
     }
 }
 
@@ -1883,6 +2182,46 @@ impl std::fmt::Display for Union4IntK0OrIntK1OrIntK3OrIntK5 {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union4IntK0OrIntK1OrIntK3OrIntK5 {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union4IntK0OrIntK1OrIntK3OrIntK5 {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union4IntK0OrIntK1OrIntK3OrIntK5",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union4KDELETEOrKGETOrKPOSTOrKPUT {
@@ -2073,6 +2412,46 @@ impl std::fmt::Display for Union4KDELETEOrKGETOrKPOSTOrKPUT {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union4KDELETEOrKGETOrKPOSTOrKPUT {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union4KDELETEOrKGETOrKPOSTOrKPUT {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union4KDELETEOrKGETOrKPOSTOrKPUT",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union4KarchivedOrKdeletedOrKdraftOrKpublished {
@@ -2260,6 +2639,46 @@ impl std::fmt::Display for Union4KarchivedOrKdeletedOrKdraftOrKpublished {
             Self::String(v) => write!(f, "String({:?})", v),
             Self::String(v) => write!(f, "String({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union4KarchivedOrKdeletedOrKdraftOrKpublished {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+            Self::String(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union4KarchivedOrKdeletedOrKdraftOrKpublished {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union4KarchivedOrKdeletedOrKdraftOrKpublished",
+            value
+        )))
     }
 }
 
@@ -2492,6 +2911,51 @@ impl std::fmt::Display for Union5IntK1OrIntK2OrIntK3OrIntK4OrIntK5 {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union5IntK1OrIntK2OrIntK3OrIntK4OrIntK5 {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union5IntK1OrIntK2OrIntK3OrIntK4OrIntK5 {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union5IntK1OrIntK2OrIntK3OrIntK4OrIntK5",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union5IntK200OrIntK201OrIntK400OrIntK404OrIntK500 {
@@ -2718,6 +3182,51 @@ impl std::fmt::Display for Union5IntK200OrIntK201OrIntK400OrIntK404OrIntK500 {
             Self::Int(v) => write!(f, "Int({:?})", v),
             Self::Int(v) => write!(f, "Int({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union5IntK200OrIntK201OrIntK400OrIntK404OrIntK500 {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union5IntK200OrIntK201OrIntK400OrIntK404OrIntK500 {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union5IntK200OrIntK201OrIntK400OrIntK404OrIntK500",
+            value
+        )))
     }
 }
 
@@ -3025,5 +3534,64 @@ impl std::fmt::Display for Union7IntK0OrIntK1OrIntK13OrIntK2OrIntK3OrIntK5OrIntK
             Self::Int(v) => write!(f, "Int({:?})", v),
             Self::Int(v) => write!(f, "Int({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue
+    for Union7IntK0OrIntK1OrIntK13OrIntK2OrIntK3OrIntK5OrIntK8
+{
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue
+    for Union7IntK0OrIntK1OrIntK13OrIntK2OrIntK3OrIntK5OrIntK8
+{
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union7IntK0OrIntK1OrIntK13OrIntK2OrIntK3OrIntK5OrIntK8",
+            value
+        )))
     }
 }

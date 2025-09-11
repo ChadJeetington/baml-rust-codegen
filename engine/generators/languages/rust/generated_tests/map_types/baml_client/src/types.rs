@@ -14,27 +14,27 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ComplexMaps {
-    pub userMap: String,
+    pub userMap: std::collections::HashMap<String, crate::typesUser>,
 
-    pub productMap: String,
+    pub productMap: std::collections::HashMap<String, crate::typesProduct>,
 
-    pub nestedMap: String,
+    pub nestedMap: std::collections::HashMap<String, std::collections::HashMap<String, String>>,
 
-    pub arrayMap: String,
+    pub arrayMap: std::collections::HashMap<String, Vec<i64>>,
 
-    pub mapArray: String,
+    pub mapArray: Vec<std::collections::HashMap<String, String>>,
 }
 
 impl ComplexMaps {
     /// Create a new ComplexMaps instance
     pub fn new(
-        userMap: String,
-        productMap: String,
-        nestedMap: String,
-        arrayMap: String,
-        mapArray: String,
+        userMap: std::collections::HashMap<String, crate::typesUser>,
+        productMap: std::collections::HashMap<String, crate::typesProduct>,
+        nestedMap: std::collections::HashMap<String, std::collections::HashMap<String, String>>,
+        arrayMap: std::collections::HashMap<String, Vec<i64>>,
+        mapArray: Vec<std::collections::HashMap<String, String>>,
     ) -> Self {
         Self {
             userMap,
@@ -49,11 +49,11 @@ impl ComplexMaps {
 impl Default for ComplexMaps {
     fn default() -> Self {
         Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            Vec::new(),
         )
     }
 }
@@ -142,25 +142,25 @@ impl baml_client_rust::types::FromBamlValue for ComplexMaps {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Config {
     pub url: String,
 
-    pub port: String,
+    pub port: i64,
 
-    pub debug: String,
+    pub debug: bool,
 }
 
 impl Config {
     /// Create a new Config instance
-    pub fn new(url: String, port: String, debug: String) -> Self {
+    pub fn new(url: String, port: i64, debug: bool) -> Self {
         Self { url, port, debug }
     }
 }
 
 impl Default for Config {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(String::new(), 0, false)
     }
 }
 
@@ -224,24 +224,24 @@ impl baml_client_rust::types::FromBamlValue for Config {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct EdgeCaseMaps {
-    pub emptyMap: String,
+    pub emptyMap: std::collections::HashMap<String, String>,
 
-    pub nullableValues: String,
+    pub nullableValues: std::collections::HashMap<String, Option<String>>,
 
-    pub optionalValues: String,
+    pub optionalValues: std::collections::HashMap<String, Option<String>>,
 
-    pub unionValues: String,
+    pub unionValues: std::collections::HashMap<String, crate::typesUnion3BoolOrIntOrString>,
 }
 
 impl EdgeCaseMaps {
     /// Create a new EdgeCaseMaps instance
     pub fn new(
-        emptyMap: String,
-        nullableValues: String,
-        optionalValues: String,
-        unionValues: String,
+        emptyMap: std::collections::HashMap<String, String>,
+        nullableValues: std::collections::HashMap<String, Option<String>>,
+        optionalValues: std::collections::HashMap<String, Option<String>>,
+        unionValues: std::collections::HashMap<String, crate::typesUnion3BoolOrIntOrString>,
     ) -> Self {
         Self {
             emptyMap,
@@ -254,7 +254,12 @@ impl EdgeCaseMaps {
 
 impl Default for EdgeCaseMaps {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+        )
     }
 }
 
@@ -340,24 +345,24 @@ impl baml_client_rust::types::FromBamlValue for EdgeCaseMaps {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MixedKeyMaps {
-    pub stringIntMap: String,
+    pub stringIntMap: std::collections::HashMap<String, i64>,
 
-    pub intStringMap: String,
+    pub intStringMap: std::collections::HashMap<String, String>,
 
-    pub enumMap: String,
+    pub enumMap: std::collections::HashMap<String, String>,
 
-    pub literalMap: String,
+    pub literalMap: std::collections::HashMap<String, crate::typesConfig>,
 }
 
 impl MixedKeyMaps {
     /// Create a new MixedKeyMaps instance
     pub fn new(
-        stringIntMap: String,
-        intStringMap: String,
-        enumMap: String,
-        literalMap: String,
+        stringIntMap: std::collections::HashMap<String, i64>,
+        intStringMap: std::collections::HashMap<String, String>,
+        enumMap: std::collections::HashMap<String, String>,
+        literalMap: std::collections::HashMap<String, crate::typesConfig>,
     ) -> Self {
         Self {
             stringIntMap,
@@ -370,7 +375,12 @@ impl MixedKeyMaps {
 
 impl Default for MixedKeyMaps {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+        )
     }
 }
 
@@ -451,27 +461,33 @@ impl baml_client_rust::types::FromBamlValue for MixedKeyMaps {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedMaps {
-    pub simple: String,
+    pub simple: std::collections::HashMap<String, String>,
 
-    pub oneLevelNested: String,
+    pub oneLevelNested: std::collections::HashMap<String, std::collections::HashMap<String, i64>>,
 
-    pub twoLevelNested: String,
+    pub twoLevelNested: std::collections::HashMap<
+        String,
+        std::collections::HashMap<String, std::collections::HashMap<String, bool>>,
+    >,
 
-    pub mapOfArrays: String,
+    pub mapOfArrays: std::collections::HashMap<String, Vec<String>>,
 
-    pub mapOfMaps: String,
+    pub mapOfMaps: std::collections::HashMap<String, std::collections::HashMap<String, f64>>,
 }
 
 impl NestedMaps {
     /// Create a new NestedMaps instance
     pub fn new(
-        simple: String,
-        oneLevelNested: String,
-        twoLevelNested: String,
-        mapOfArrays: String,
-        mapOfMaps: String,
+        simple: std::collections::HashMap<String, String>,
+        oneLevelNested: std::collections::HashMap<String, std::collections::HashMap<String, i64>>,
+        twoLevelNested: std::collections::HashMap<
+            String,
+            std::collections::HashMap<String, std::collections::HashMap<String, bool>>,
+        >,
+        mapOfArrays: std::collections::HashMap<String, Vec<String>>,
+        mapOfMaps: std::collections::HashMap<String, std::collections::HashMap<String, f64>>,
     ) -> Self {
         Self {
             simple,
@@ -486,11 +502,11 @@ impl NestedMaps {
 impl Default for NestedMaps {
     fn default() -> Self {
         Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
         )
     }
 }
@@ -589,20 +605,20 @@ impl baml_client_rust::types::FromBamlValue for NestedMaps {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Product {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
-    pub price: String,
+    pub price: f64,
 
-    pub tags: String,
+    pub tags: Vec<String>,
 }
 
 impl Product {
     /// Create a new Product instance
-    pub fn new(id: String, name: String, price: String, tags: String) -> Self {
+    pub fn new(id: i64, name: String, price: f64, tags: Vec<String>) -> Self {
         Self {
             id,
             name,
@@ -614,7 +630,7 @@ impl Product {
 
 impl Default for Product {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(0, String::new(), 0.0, Vec::new())
     }
 }
 
@@ -689,27 +705,27 @@ impl baml_client_rust::types::FromBamlValue for Product {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SimpleMaps {
-    pub stringToString: String,
+    pub stringToString: std::collections::HashMap<String, String>,
 
-    pub stringToInt: String,
+    pub stringToInt: std::collections::HashMap<String, i64>,
 
-    pub stringToFloat: String,
+    pub stringToFloat: std::collections::HashMap<String, f64>,
 
-    pub stringToBool: String,
+    pub stringToBool: std::collections::HashMap<String, bool>,
 
-    pub intToString: String,
+    pub intToString: std::collections::HashMap<String, String>,
 }
 
 impl SimpleMaps {
     /// Create a new SimpleMaps instance
     pub fn new(
-        stringToString: String,
-        stringToInt: String,
-        stringToFloat: String,
-        stringToBool: String,
-        intToString: String,
+        stringToString: std::collections::HashMap<String, String>,
+        stringToInt: std::collections::HashMap<String, i64>,
+        stringToFloat: std::collections::HashMap<String, f64>,
+        stringToBool: std::collections::HashMap<String, bool>,
+        intToString: std::collections::HashMap<String, String>,
     ) -> Self {
         Self {
             stringToString,
@@ -724,11 +740,11 @@ impl SimpleMaps {
 impl Default for SimpleMaps {
     fn default() -> Self {
         Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
+            std::collections::HashMap::new(),
         )
     }
 }
@@ -830,20 +846,20 @@ impl baml_client_rust::types::FromBamlValue for SimpleMaps {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
     pub email: String,
 
-    pub active: String,
+    pub active: bool,
 }
 
 impl User {
     /// Create a new User instance
-    pub fn new(id: String, name: String, email: String, active: String) -> Self {
+    pub fn new(id: i64, name: String, email: String, active: bool) -> Self {
         Self {
             id,
             name,
@@ -855,7 +871,7 @@ impl User {
 
 impl Default for User {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(0, String::new(), String::new(), false)
     }
 }
 
@@ -1179,5 +1195,40 @@ impl std::fmt::Display for Union3BoolOrIntOrString {
             Self::Int(v) => write!(f, "Int({:?})", v),
             Self::Bool(v) => write!(f, "Bool({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3BoolOrIntOrString {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Bool(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3BoolOrIntOrString {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Bool variant
+        if let Ok(variant_value) = bool::from_baml_value(value.clone()) {
+            return Ok(Self::Bool(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3BoolOrIntOrString",
+            value
+        )))
     }
 }

@@ -15,6 +15,11 @@ pub extern "C" fn version() -> *const libc::c_char {
     })
 }
 
+#[no_mangle]
+pub extern "C" fn get_library_version() -> *const libc::c_char {
+    version()
+}
+
 #[allow(clippy::not_unsafe_ptr_arg_deref)]
 #[no_mangle]
 pub extern "C" fn create_baml_runtime(

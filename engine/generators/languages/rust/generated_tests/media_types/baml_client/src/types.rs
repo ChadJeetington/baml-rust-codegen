@@ -14,16 +14,16 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MediaAnalysisResult {
-    pub topics: String,
+    pub topics: Vec<String>,
 
     pub analysisText: String,
 }
 
 impl MediaAnalysisResult {
     /// Create a new MediaAnalysisResult instance
-    pub fn new(topics: String, analysisText: String) -> Self {
+    pub fn new(topics: Vec<String>, analysisText: String) -> Self {
         Self {
             topics,
             analysisText,
@@ -33,7 +33,7 @@ impl MediaAnalysisResult {
 
 impl Default for MediaAnalysisResult {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(Vec::new(), String::new())
     }
 }
 
@@ -89,16 +89,16 @@ impl baml_client_rust::types::FromBamlValue for MediaAnalysisResult {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MediaArrayAnalysisResult {
     pub analysisText: String,
 
-    pub mediaCount: String,
+    pub mediaCount: i64,
 }
 
 impl MediaArrayAnalysisResult {
     /// Create a new MediaArrayAnalysisResult instance
-    pub fn new(analysisText: String, mediaCount: String) -> Self {
+    pub fn new(analysisText: String, mediaCount: i64) -> Self {
         Self {
             analysisText,
             mediaCount,
@@ -108,7 +108,7 @@ impl MediaArrayAnalysisResult {
 
 impl Default for MediaArrayAnalysisResult {
     fn default() -> Self {
-        Self::new(String::new(), String::new())
+        Self::new(String::new(), 0)
     }
 }
 
@@ -164,18 +164,18 @@ impl baml_client_rust::types::FromBamlValue for MediaArrayAnalysisResult {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MediaMapAnalysisResult {
     pub analysisText: String,
 
-    pub keyCount: String,
+    pub keyCount: i64,
 
-    pub keys: String,
+    pub keys: Vec<String>,
 }
 
 impl MediaMapAnalysisResult {
     /// Create a new MediaMapAnalysisResult instance
-    pub fn new(analysisText: String, keyCount: String, keys: String) -> Self {
+    pub fn new(analysisText: String, keyCount: i64, keys: Vec<String>) -> Self {
         Self {
             analysisText,
             keyCount,
@@ -186,7 +186,7 @@ impl MediaMapAnalysisResult {
 
 impl Default for MediaMapAnalysisResult {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(String::new(), 0, Vec::new())
     }
 }
 
@@ -253,23 +253,23 @@ impl baml_client_rust::types::FromBamlValue for MediaMapAnalysisResult {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MixedMediaAnalysisResult {
     pub title: String,
 
     pub description: String,
 
-    pub hasImage: String,
+    pub hasImage: bool,
 
-    pub hasVideo: String,
+    pub hasVideo: bool,
 
-    pub hasAudio: String,
+    pub hasAudio: bool,
 
-    pub hasPdf: String,
+    pub hasPdf: bool,
 
-    pub additionalImageCount: String,
+    pub additionalImageCount: i64,
 
-    pub metadataKeys: String,
+    pub metadataKeys: Vec<String>,
 }
 
 impl MixedMediaAnalysisResult {
@@ -277,12 +277,12 @@ impl MixedMediaAnalysisResult {
     pub fn new(
         title: String,
         description: String,
-        hasImage: String,
-        hasVideo: String,
-        hasAudio: String,
-        hasPdf: String,
-        additionalImageCount: String,
-        metadataKeys: String,
+        hasImage: bool,
+        hasVideo: bool,
+        hasAudio: bool,
+        hasPdf: bool,
+        additionalImageCount: i64,
+        metadataKeys: Vec<String>,
     ) -> Self {
         Self {
             title,
@@ -302,12 +302,12 @@ impl Default for MixedMediaAnalysisResult {
         Self::new(
             String::new(),
             String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
+            false,
+            false,
+            false,
+            false,
+            0,
+            Vec::new(),
         )
     }
 }
@@ -442,21 +442,21 @@ impl baml_client_rust::types::FromBamlValue for MixedMediaAnalysisResult {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct OptionalMediaAnalysisResult {
     pub analysisText: String,
 
-    pub providedMediaTypes: String,
+    pub providedMediaTypes: Vec<String>,
 
-    pub missingMediaTypes: String,
+    pub missingMediaTypes: Vec<String>,
 }
 
 impl OptionalMediaAnalysisResult {
     /// Create a new OptionalMediaAnalysisResult instance
     pub fn new(
         analysisText: String,
-        providedMediaTypes: String,
-        missingMediaTypes: String,
+        providedMediaTypes: Vec<String>,
+        missingMediaTypes: Vec<String>,
     ) -> Self {
         Self {
             analysisText,
@@ -468,7 +468,7 @@ impl OptionalMediaAnalysisResult {
 
 impl Default for OptionalMediaAnalysisResult {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(String::new(), Vec::new(), Vec::new())
     }
 }
 
@@ -548,10 +548,10 @@ impl baml_client_rust::types::FromBamlValue for OptionalMediaAnalysisResult {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union4AudioOrImageOrPdfOrVideo {
-    Media0(crate::types::BamlImage),
-    Media1(crate::types::BamlAudio),
-    Media2(crate::types::BamlPdf),
-    Media3(crate::types::BamlVideo),
+    Media0(crate::typesBamlImage),
+    Media1(crate::typesBamlAudio),
+    Media2(crate::typesBamlPdf),
+    Media3(crate::typesBamlVideo),
 }
 
 impl Union4AudioOrImageOrPdfOrVideo {
@@ -560,7 +560,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
         matches!(self, Self::Media0(_))
     }
     /// Get the Media0 value if this union contains it
-    pub fn as_media0(&self) -> Option<&crate::types::BamlImage> {
+    pub fn as_media0(&self) -> Option<&crate::typesBamlImage> {
         match self {
             Self::Media0(v) => Some(v),
             _ => None,
@@ -568,7 +568,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Extract the Media0 value, consuming the union
-    pub fn into_media0(self) -> Option<crate::types::BamlImage> {
+    pub fn into_media0(self) -> Option<crate::typesBamlImage> {
         match self {
             Self::Media0(v) => Some(v),
             _ => None,
@@ -576,7 +576,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Get a mutable reference to the Media0 value if this union contains it
-    pub fn as_media0_mut(&mut self) -> Option<&mut crate::types::BamlImage> {
+    pub fn as_media0_mut(&mut self) -> Option<&mut crate::typesBamlImage> {
         match self {
             Self::Media0(v) => Some(v),
             _ => None,
@@ -584,7 +584,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Create a new Union4AudioOrImageOrPdfOrVideo with a Media0 variant
-    pub fn media0(value: crate::types::BamlImage) -> Self {
+    pub fn media0(value: crate::typesBamlImage) -> Self {
         Self::Media0(value)
     }
 
@@ -593,7 +593,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
         matches!(self, Self::Media1(_))
     }
     /// Get the Media1 value if this union contains it
-    pub fn as_media1(&self) -> Option<&crate::types::BamlAudio> {
+    pub fn as_media1(&self) -> Option<&crate::typesBamlAudio> {
         match self {
             Self::Media1(v) => Some(v),
             _ => None,
@@ -601,7 +601,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Extract the Media1 value, consuming the union
-    pub fn into_media1(self) -> Option<crate::types::BamlAudio> {
+    pub fn into_media1(self) -> Option<crate::typesBamlAudio> {
         match self {
             Self::Media1(v) => Some(v),
             _ => None,
@@ -609,7 +609,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Get a mutable reference to the Media1 value if this union contains it
-    pub fn as_media1_mut(&mut self) -> Option<&mut crate::types::BamlAudio> {
+    pub fn as_media1_mut(&mut self) -> Option<&mut crate::typesBamlAudio> {
         match self {
             Self::Media1(v) => Some(v),
             _ => None,
@@ -617,7 +617,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Create a new Union4AudioOrImageOrPdfOrVideo with a Media1 variant
-    pub fn media1(value: crate::types::BamlAudio) -> Self {
+    pub fn media1(value: crate::typesBamlAudio) -> Self {
         Self::Media1(value)
     }
 
@@ -626,7 +626,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
         matches!(self, Self::Media2(_))
     }
     /// Get the Media2 value if this union contains it
-    pub fn as_media2(&self) -> Option<&crate::types::BamlPdf> {
+    pub fn as_media2(&self) -> Option<&crate::typesBamlPdf> {
         match self {
             Self::Media2(v) => Some(v),
             _ => None,
@@ -634,7 +634,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Extract the Media2 value, consuming the union
-    pub fn into_media2(self) -> Option<crate::types::BamlPdf> {
+    pub fn into_media2(self) -> Option<crate::typesBamlPdf> {
         match self {
             Self::Media2(v) => Some(v),
             _ => None,
@@ -642,7 +642,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Get a mutable reference to the Media2 value if this union contains it
-    pub fn as_media2_mut(&mut self) -> Option<&mut crate::types::BamlPdf> {
+    pub fn as_media2_mut(&mut self) -> Option<&mut crate::typesBamlPdf> {
         match self {
             Self::Media2(v) => Some(v),
             _ => None,
@@ -650,7 +650,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Create a new Union4AudioOrImageOrPdfOrVideo with a Media2 variant
-    pub fn media2(value: crate::types::BamlPdf) -> Self {
+    pub fn media2(value: crate::typesBamlPdf) -> Self {
         Self::Media2(value)
     }
 
@@ -659,7 +659,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
         matches!(self, Self::Media3(_))
     }
     /// Get the Media3 value if this union contains it
-    pub fn as_media3(&self) -> Option<&crate::types::BamlVideo> {
+    pub fn as_media3(&self) -> Option<&crate::typesBamlVideo> {
         match self {
             Self::Media3(v) => Some(v),
             _ => None,
@@ -667,7 +667,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Extract the Media3 value, consuming the union
-    pub fn into_media3(self) -> Option<crate::types::BamlVideo> {
+    pub fn into_media3(self) -> Option<crate::typesBamlVideo> {
         match self {
             Self::Media3(v) => Some(v),
             _ => None,
@@ -675,7 +675,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Get a mutable reference to the Media3 value if this union contains it
-    pub fn as_media3_mut(&mut self) -> Option<&mut crate::types::BamlVideo> {
+    pub fn as_media3_mut(&mut self) -> Option<&mut crate::typesBamlVideo> {
         match self {
             Self::Media3(v) => Some(v),
             _ => None,
@@ -683,7 +683,7 @@ impl Union4AudioOrImageOrPdfOrVideo {
     }
 
     /// Create a new Union4AudioOrImageOrPdfOrVideo with a Media3 variant
-    pub fn media3(value: crate::types::BamlVideo) -> Self {
+    pub fn media3(value: crate::typesBamlVideo) -> Self {
         Self::Media3(value)
     }
 }
@@ -693,10 +693,10 @@ impl Union4AudioOrImageOrPdfOrVideo {
     /// Match on the union variant and apply the corresponding function
     pub fn match_variant<T>(
         &self,
-        media0: impl FnOnce(&crate::types::BamlImage) -> T,
-        media1: impl FnOnce(&crate::types::BamlAudio) -> T,
-        media2: impl FnOnce(&crate::types::BamlPdf) -> T,
-        media3: impl FnOnce(&crate::types::BamlVideo) -> T,
+        media0: impl FnOnce(&crate::typesBamlImage) -> T,
+        media1: impl FnOnce(&crate::typesBamlAudio) -> T,
+        media2: impl FnOnce(&crate::typesBamlPdf) -> T,
+        media3: impl FnOnce(&crate::typesBamlVideo) -> T,
     ) -> T {
         match self {
             Self::Media0(v) => media0(v),
@@ -709,10 +709,10 @@ impl Union4AudioOrImageOrPdfOrVideo {
     /// Match on the union variant and apply the corresponding function, consuming the union
     pub fn match_variant_owned<T>(
         self,
-        media0: impl FnOnce(crate::types::BamlImage) -> T,
-        media1: impl FnOnce(crate::types::BamlAudio) -> T,
-        media2: impl FnOnce(crate::types::BamlPdf) -> T,
-        media3: impl FnOnce(crate::types::BamlVideo) -> T,
+        media0: impl FnOnce(crate::typesBamlImage) -> T,
+        media1: impl FnOnce(crate::typesBamlAudio) -> T,
+        media2: impl FnOnce(crate::typesBamlPdf) -> T,
+        media3: impl FnOnce(crate::typesBamlVideo) -> T,
     ) -> T {
         match self {
             Self::Media0(v) => media0(v),
@@ -732,5 +732,45 @@ impl std::fmt::Display for Union4AudioOrImageOrPdfOrVideo {
             Self::Media2(v) => write!(f, "Media2({:?})", v),
             Self::Media3(v) => write!(f, "Media3({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union4AudioOrImageOrPdfOrVideo {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::Media0(v) => v.to_baml_value(),
+            Self::Media1(v) => v.to_baml_value(),
+            Self::Media2(v) => v.to_baml_value(),
+            Self::Media3(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union4AudioOrImageOrPdfOrVideo {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try Media0 variant
+        if let Ok(variant_value) = crate::typesBamlImage::from_baml_value(value.clone()) {
+            return Ok(Self::Media0(variant_value));
+        }
+        // Try Media1 variant
+        if let Ok(variant_value) = crate::typesBamlAudio::from_baml_value(value.clone()) {
+            return Ok(Self::Media1(variant_value));
+        }
+        // Try Media2 variant
+        if let Ok(variant_value) = crate::typesBamlPdf::from_baml_value(value.clone()) {
+            return Ok(Self::Media2(variant_value));
+        }
+        // Try Media3 variant
+        if let Ok(variant_value) = crate::typesBamlVideo::from_baml_value(value.clone()) {
+            return Ok(Self::Media3(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union4AudioOrImageOrPdfOrVideo",
+            value
+        )))
     }
 }

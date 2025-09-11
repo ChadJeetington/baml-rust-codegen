@@ -5,15 +5,15 @@
 
 pub mod utils;
 
-// Re-export generated client and types - temporarily disabled
-// pub use baml_client::*;
-
 // Re-export commonly used types
 pub use serde_json::Value as JsonValue;
 pub use std::collections::HashMap;
 
 // Re-export from baml_client_rust
-pub use baml_client_rust::{BamlClient, BamlClientBuilder, BamlResult, BamlContext};
+pub use baml_client_rust::{BamlClient, BamlClientBuilder, BamlResult, BamlContext, CoreClient};
+
+// Re-export generated client and types
+pub use baml_client::*;
 
 /// Test configuration and setup utilities
 pub mod test_config {

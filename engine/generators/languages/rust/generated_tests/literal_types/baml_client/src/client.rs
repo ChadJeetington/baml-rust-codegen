@@ -61,7 +61,7 @@ impl BamlClient {
     pub async fn test_boolean_literals(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::BooleanLiterals> {
+    ) -> BamlResult<crate::typesBooleanLiterals> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -76,7 +76,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::BooleanLiterals>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesBooleanLiterals>>,
             > + Send
             + Sync,
     > {
@@ -93,7 +93,7 @@ impl BamlClient {
     pub async fn test_complex_literals(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::ComplexLiterals> {
+    ) -> BamlResult<crate::typesComplexLiterals> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -108,7 +108,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::ComplexLiterals>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesComplexLiterals>>,
             > + Send
             + Sync,
     > {
@@ -125,7 +125,7 @@ impl BamlClient {
     pub async fn test_integer_literals(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::IntegerLiterals> {
+    ) -> BamlResult<crate::typesIntegerLiterals> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -140,7 +140,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::IntegerLiterals>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesIntegerLiterals>>,
             > + Send
             + Sync,
     > {
@@ -157,7 +157,7 @@ impl BamlClient {
     pub async fn test_mixed_literals(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::MixedLiterals> {
+    ) -> BamlResult<crate::typesMixedLiterals> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -172,7 +172,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::MixedLiterals>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesMixedLiterals>>,
             > + Send
             + Sync,
     > {
@@ -189,7 +189,7 @@ impl BamlClient {
     pub async fn test_string_literals(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::StringLiterals> {
+    ) -> BamlResult<crate::typesStringLiterals> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -204,7 +204,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::StringLiterals>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesStringLiterals>>,
             > + Send
             + Sync,
     > {

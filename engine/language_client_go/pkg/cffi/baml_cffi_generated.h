@@ -61,6 +61,8 @@ struct Buffer call_object_method(const void *runtime, const char *encoded_args, 
 
 const char *version(void);
 
+const char *get_library_version(void);
+
 const void *create_baml_runtime(const char *root_path,
                                 const char *src_files_json,
                                 const char *env_vars_json);

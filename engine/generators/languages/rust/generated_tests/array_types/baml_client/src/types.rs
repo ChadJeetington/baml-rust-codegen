@@ -14,18 +14,22 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ArrayWithConstraints {
-    pub nonEmptyStrings: String,
+    pub nonEmptyStrings: Vec<String>,
 
-    pub limitedInts: String,
+    pub limitedInts: Vec<i64>,
 
-    pub positiveFloats: String,
+    pub positiveFloats: Vec<f64>,
 }
 
 impl ArrayWithConstraints {
     /// Create a new ArrayWithConstraints instance
-    pub fn new(nonEmptyStrings: String, limitedInts: String, positiveFloats: String) -> Self {
+    pub fn new(
+        nonEmptyStrings: Vec<String>,
+        limitedInts: Vec<i64>,
+        positiveFloats: Vec<f64>,
+    ) -> Self {
         Self {
             nonEmptyStrings,
             limitedInts,
@@ -36,7 +40,7 @@ impl ArrayWithConstraints {
 
 impl Default for ArrayWithConstraints {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(Vec::new(), Vec::new(), Vec::new())
     }
 }
 
@@ -106,27 +110,27 @@ impl baml_client_rust::types::FromBamlValue for ArrayWithConstraints {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MixedArrays {
-    pub primitiveArray: String,
+    pub primitiveArray: Vec<crate::typesUnion4BoolOrFloatOrIntOrString>,
 
-    pub nullableArray: String,
+    pub nullableArray: Vec<Option<String>>,
 
-    pub optionalItems: String,
+    pub optionalItems: Vec<Option<String>>,
 
-    pub arrayOfArrays: String,
+    pub arrayOfArrays: Vec<Vec<String>>,
 
-    pub complexMixed: String,
+    pub complexMixed: Vec<crate::typesUnion3ProductOrTagOrUser>,
 }
 
 impl MixedArrays {
     /// Create a new MixedArrays instance
     pub fn new(
-        primitiveArray: String,
-        nullableArray: String,
-        optionalItems: String,
-        arrayOfArrays: String,
-        complexMixed: String,
+        primitiveArray: Vec<crate::typesUnion4BoolOrFloatOrIntOrString>,
+        nullableArray: Vec<Option<String>>,
+        optionalItems: Vec<Option<String>>,
+        arrayOfArrays: Vec<Vec<String>>,
+        complexMixed: Vec<crate::typesUnion3ProductOrTagOrUser>,
     ) -> Self {
         Self {
             primitiveArray,
@@ -140,13 +144,7 @@ impl MixedArrays {
 
 impl Default for MixedArrays {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(Vec::new(), Vec::new(), Vec::new(), Vec::new(), Vec::new())
     }
 }
 
@@ -253,18 +251,22 @@ impl baml_client_rust::types::FromBamlValue for MixedArrays {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedArrays {
-    pub matrix: String,
+    pub matrix: Vec<Vec<i64>>,
 
-    pub stringMatrix: String,
+    pub stringMatrix: Vec<Vec<String>>,
 
-    pub threeDimensional: String,
+    pub threeDimensional: Vec<Vec<Vec<f64>>>,
 }
 
 impl NestedArrays {
     /// Create a new NestedArrays instance
-    pub fn new(matrix: String, stringMatrix: String, threeDimensional: String) -> Self {
+    pub fn new(
+        matrix: Vec<Vec<i64>>,
+        stringMatrix: Vec<Vec<String>>,
+        threeDimensional: Vec<Vec<Vec<f64>>>,
+    ) -> Self {
         Self {
             matrix,
             stringMatrix,
@@ -275,7 +277,7 @@ impl NestedArrays {
 
 impl Default for NestedArrays {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(Vec::new(), Vec::new(), Vec::new())
     }
 }
 
@@ -345,18 +347,22 @@ impl baml_client_rust::types::FromBamlValue for NestedArrays {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ObjectArrays {
-    pub users: String,
+    pub users: Vec<crate::typesUser>,
 
-    pub products: String,
+    pub products: Vec<crate::typesProduct>,
 
-    pub tags: String,
+    pub tags: Vec<crate::typesTag>,
 }
 
 impl ObjectArrays {
     /// Create a new ObjectArrays instance
-    pub fn new(users: String, products: String, tags: String) -> Self {
+    pub fn new(
+        users: Vec<crate::typesUser>,
+        products: Vec<crate::typesProduct>,
+        tags: Vec<crate::typesTag>,
+    ) -> Self {
         Self {
             users,
             products,
@@ -367,7 +373,7 @@ impl ObjectArrays {
 
 impl Default for ObjectArrays {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(Vec::new(), Vec::new(), Vec::new())
     }
 }
 
@@ -431,22 +437,22 @@ impl baml_client_rust::types::FromBamlValue for ObjectArrays {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Product {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
-    pub price: String,
+    pub price: f64,
 
-    pub tags: String,
+    pub tags: Vec<String>,
 
-    pub inStock: String,
+    pub inStock: bool,
 }
 
 impl Product {
     /// Create a new Product instance
-    pub fn new(id: String, name: String, price: String, tags: String, inStock: String) -> Self {
+    pub fn new(id: i64, name: String, price: f64, tags: Vec<String>, inStock: bool) -> Self {
         Self {
             id,
             name,
@@ -459,13 +465,7 @@ impl Product {
 
 impl Default for Product {
     fn default() -> Self {
-        Self::new(
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-            String::new(),
-        )
+        Self::new(0, String::new(), 0.0, Vec::new(), false)
     }
 }
 
@@ -551,20 +551,25 @@ impl baml_client_rust::types::FromBamlValue for Product {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SimpleArrays {
-    pub strings: String,
+    pub strings: Vec<String>,
 
-    pub integers: String,
+    pub integers: Vec<i64>,
 
-    pub floats: String,
+    pub floats: Vec<f64>,
 
-    pub booleans: String,
+    pub booleans: Vec<bool>,
 }
 
 impl SimpleArrays {
     /// Create a new SimpleArrays instance
-    pub fn new(strings: String, integers: String, floats: String, booleans: String) -> Self {
+    pub fn new(
+        strings: Vec<String>,
+        integers: Vec<i64>,
+        floats: Vec<f64>,
+        booleans: Vec<bool>,
+    ) -> Self {
         Self {
             strings,
             integers,
@@ -576,7 +581,7 @@ impl SimpleArrays {
 
 impl Default for SimpleArrays {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(Vec::new(), Vec::new(), Vec::new(), Vec::new())
     }
 }
 
@@ -651,9 +656,9 @@ impl baml_client_rust::types::FromBamlValue for SimpleArrays {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Tag {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
@@ -662,14 +667,14 @@ pub struct Tag {
 
 impl Tag {
     /// Create a new Tag instance
-    pub fn new(id: String, name: String, color: String) -> Self {
+    pub fn new(id: i64, name: String, color: String) -> Self {
         Self { id, name, color }
     }
 }
 
 impl Default for Tag {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new())
+        Self::new(0, String::new(), String::new())
     }
 }
 
@@ -733,20 +738,20 @@ impl baml_client_rust::types::FromBamlValue for Tag {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
-    pub id: String,
+    pub id: i64,
 
     pub name: String,
 
     pub email: String,
 
-    pub isActive: String,
+    pub isActive: bool,
 }
 
 impl User {
     /// Create a new User instance
-    pub fn new(id: String, name: String, email: String, isActive: String) -> Self {
+    pub fn new(id: i64, name: String, email: String, isActive: bool) -> Self {
         Self {
             id,
             name,
@@ -758,7 +763,7 @@ impl User {
 
 impl Default for User {
     fn default() -> Self {
-        Self::new(String::new(), String::new(), String::new(), String::new())
+        Self::new(0, String::new(), String::new(), false)
     }
 }
 
@@ -984,12 +989,47 @@ impl std::fmt::Display for Union3BoolOrIntOrString {
     }
 }
 
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3BoolOrIntOrString {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Bool(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3BoolOrIntOrString {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Bool variant
+        if let Ok(variant_value) = bool::from_baml_value(value.clone()) {
+            return Ok(Self::Bool(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3BoolOrIntOrString",
+            value
+        )))
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Union3ProductOrTagOrUser {
-    User(crate::types::User),
-    Product(crate::types::Product),
-    Tag(crate::types::Tag),
+    User(crate::typesUser),
+    Product(crate::typesProduct),
+    Tag(crate::typesTag),
 }
 
 impl Union3ProductOrTagOrUser {
@@ -998,7 +1038,7 @@ impl Union3ProductOrTagOrUser {
         matches!(self, Self::User(_))
     }
     /// Get the User value if this union contains it
-    pub fn as_user(&self) -> Option<&crate::types::User> {
+    pub fn as_user(&self) -> Option<&crate::typesUser> {
         match self {
             Self::User(v) => Some(v),
             _ => None,
@@ -1006,7 +1046,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Extract the User value, consuming the union
-    pub fn into_user(self) -> Option<crate::types::User> {
+    pub fn into_user(self) -> Option<crate::typesUser> {
         match self {
             Self::User(v) => Some(v),
             _ => None,
@@ -1014,7 +1054,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Get a mutable reference to the User value if this union contains it
-    pub fn as_user_mut(&mut self) -> Option<&mut crate::types::User> {
+    pub fn as_user_mut(&mut self) -> Option<&mut crate::typesUser> {
         match self {
             Self::User(v) => Some(v),
             _ => None,
@@ -1022,7 +1062,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Create a new Union3ProductOrTagOrUser with a User variant
-    pub fn user(value: crate::types::User) -> Self {
+    pub fn user(value: crate::typesUser) -> Self {
         Self::User(value)
     }
 
@@ -1031,7 +1071,7 @@ impl Union3ProductOrTagOrUser {
         matches!(self, Self::Product(_))
     }
     /// Get the Product value if this union contains it
-    pub fn as_product(&self) -> Option<&crate::types::Product> {
+    pub fn as_product(&self) -> Option<&crate::typesProduct> {
         match self {
             Self::Product(v) => Some(v),
             _ => None,
@@ -1039,7 +1079,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Extract the Product value, consuming the union
-    pub fn into_product(self) -> Option<crate::types::Product> {
+    pub fn into_product(self) -> Option<crate::typesProduct> {
         match self {
             Self::Product(v) => Some(v),
             _ => None,
@@ -1047,7 +1087,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Get a mutable reference to the Product value if this union contains it
-    pub fn as_product_mut(&mut self) -> Option<&mut crate::types::Product> {
+    pub fn as_product_mut(&mut self) -> Option<&mut crate::typesProduct> {
         match self {
             Self::Product(v) => Some(v),
             _ => None,
@@ -1055,7 +1095,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Create a new Union3ProductOrTagOrUser with a Product variant
-    pub fn product(value: crate::types::Product) -> Self {
+    pub fn product(value: crate::typesProduct) -> Self {
         Self::Product(value)
     }
 
@@ -1064,7 +1104,7 @@ impl Union3ProductOrTagOrUser {
         matches!(self, Self::Tag(_))
     }
     /// Get the Tag value if this union contains it
-    pub fn as_tag(&self) -> Option<&crate::types::Tag> {
+    pub fn as_tag(&self) -> Option<&crate::typesTag> {
         match self {
             Self::Tag(v) => Some(v),
             _ => None,
@@ -1072,7 +1112,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Extract the Tag value, consuming the union
-    pub fn into_tag(self) -> Option<crate::types::Tag> {
+    pub fn into_tag(self) -> Option<crate::typesTag> {
         match self {
             Self::Tag(v) => Some(v),
             _ => None,
@@ -1080,7 +1120,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Get a mutable reference to the Tag value if this union contains it
-    pub fn as_tag_mut(&mut self) -> Option<&mut crate::types::Tag> {
+    pub fn as_tag_mut(&mut self) -> Option<&mut crate::typesTag> {
         match self {
             Self::Tag(v) => Some(v),
             _ => None,
@@ -1088,7 +1128,7 @@ impl Union3ProductOrTagOrUser {
     }
 
     /// Create a new Union3ProductOrTagOrUser with a Tag variant
-    pub fn tag(value: crate::types::Tag) -> Self {
+    pub fn tag(value: crate::typesTag) -> Self {
         Self::Tag(value)
     }
 }
@@ -1098,9 +1138,9 @@ impl Union3ProductOrTagOrUser {
     /// Match on the union variant and apply the corresponding function
     pub fn match_variant<T>(
         &self,
-        user: impl FnOnce(&crate::types::User) -> T,
-        product: impl FnOnce(&crate::types::Product) -> T,
-        tag: impl FnOnce(&crate::types::Tag) -> T,
+        user: impl FnOnce(&crate::typesUser) -> T,
+        product: impl FnOnce(&crate::typesProduct) -> T,
+        tag: impl FnOnce(&crate::typesTag) -> T,
     ) -> T {
         match self {
             Self::User(v) => user(v),
@@ -1112,9 +1152,9 @@ impl Union3ProductOrTagOrUser {
     /// Match on the union variant and apply the corresponding function, consuming the union
     pub fn match_variant_owned<T>(
         self,
-        user: impl FnOnce(crate::types::User) -> T,
-        product: impl FnOnce(crate::types::Product) -> T,
-        tag: impl FnOnce(crate::types::Tag) -> T,
+        user: impl FnOnce(crate::typesUser) -> T,
+        product: impl FnOnce(crate::typesProduct) -> T,
+        tag: impl FnOnce(crate::typesTag) -> T,
     ) -> T {
         match self {
             Self::User(v) => user(v),
@@ -1132,6 +1172,41 @@ impl std::fmt::Display for Union3ProductOrTagOrUser {
             Self::Product(v) => write!(f, "Product({:?})", v),
             Self::Tag(v) => write!(f, "Tag({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union3ProductOrTagOrUser {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::User(v) => v.to_baml_value(),
+            Self::Product(v) => v.to_baml_value(),
+            Self::Tag(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union3ProductOrTagOrUser {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try User variant
+        if let Ok(variant_value) = crate::typesUser::from_baml_value(value.clone()) {
+            return Ok(Self::User(variant_value));
+        }
+        // Try Product variant
+        if let Ok(variant_value) = crate::typesProduct::from_baml_value(value.clone()) {
+            return Ok(Self::Product(variant_value));
+        }
+        // Try Tag variant
+        if let Ok(variant_value) = crate::typesTag::from_baml_value(value.clone()) {
+            return Ok(Self::Tag(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union3ProductOrTagOrUser",
+            value
+        )))
     }
 }
 
@@ -1322,5 +1397,45 @@ impl std::fmt::Display for Union4BoolOrFloatOrIntOrString {
             Self::Float(v) => write!(f, "Float({:?})", v),
             Self::Bool(v) => write!(f, "Bool({:?})", v),
         }
+    }
+}
+
+// BAML trait implementations
+impl baml_client_rust::types::ToBamlValue for Union4BoolOrFloatOrIntOrString {
+    fn to_baml_value(self) -> baml_client_rust::BamlResult<baml_client_rust::types::BamlValue> {
+        match self {
+            Self::String(v) => v.to_baml_value(),
+            Self::Int(v) => v.to_baml_value(),
+            Self::Float(v) => v.to_baml_value(),
+            Self::Bool(v) => v.to_baml_value(),
+        }
+    }
+}
+
+impl baml_client_rust::types::FromBamlValue for Union4BoolOrFloatOrIntOrString {
+    fn from_baml_value(
+        value: baml_client_rust::types::BamlValue,
+    ) -> baml_client_rust::BamlResult<Self> {
+        // Try String variant
+        if let Ok(variant_value) = String::from_baml_value(value.clone()) {
+            return Ok(Self::String(variant_value));
+        }
+        // Try Int variant
+        if let Ok(variant_value) = i64::from_baml_value(value.clone()) {
+            return Ok(Self::Int(variant_value));
+        }
+        // Try Float variant
+        if let Ok(variant_value) = f64::from_baml_value(value.clone()) {
+            return Ok(Self::Float(variant_value));
+        }
+        // Try Bool variant
+        if let Ok(variant_value) = bool::from_baml_value(value.clone()) {
+            return Ok(Self::Bool(variant_value));
+        }
+
+        Err(baml_client_rust::BamlError::deserialization(format!(
+            "Could not convert {:?} to Union4BoolOrFloatOrIntOrString",
+            value
+        )))
     }
 }

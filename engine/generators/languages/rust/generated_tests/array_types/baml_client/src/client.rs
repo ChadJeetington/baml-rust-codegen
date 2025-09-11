@@ -58,7 +58,7 @@ impl Default for BamlClient {
 }
 impl BamlClient {
     /// TestEmptyArrays - Generated BAML function
-    pub async fn test_empty_arrays(&self, input: String) -> BamlResult<crate::types::SimpleArrays> {
+    pub async fn test_empty_arrays(&self, input: String) -> BamlResult<crate::typesSimpleArrays> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -71,7 +71,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleArrays>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleArrays>>,
             > + Send
             + Sync,
     > {
@@ -85,7 +85,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestLargeArrays - Generated BAML function
-    pub async fn test_large_arrays(&self, input: String) -> BamlResult<crate::types::SimpleArrays> {
+    pub async fn test_large_arrays(&self, input: String) -> BamlResult<crate::typesSimpleArrays> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -98,7 +98,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleArrays>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleArrays>>,
             > + Send
             + Sync,
     > {
@@ -112,7 +112,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestMixedArrays - Generated BAML function
-    pub async fn test_mixed_arrays(&self, input: String) -> BamlResult<crate::types::MixedArrays> {
+    pub async fn test_mixed_arrays(&self, input: String) -> BamlResult<crate::typesMixedArrays> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -125,7 +125,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::MixedArrays>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesMixedArrays>>,
             > + Send
             + Sync,
     > {
@@ -139,10 +139,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestNestedArrays - Generated BAML function
-    pub async fn test_nested_arrays(
-        &self,
-        input: String,
-    ) -> BamlResult<crate::types::NestedArrays> {
+    pub async fn test_nested_arrays(&self, input: String) -> BamlResult<crate::typesNestedArrays> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -155,7 +152,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::NestedArrays>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesNestedArrays>>,
             > + Send
             + Sync,
     > {
@@ -169,10 +166,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestObjectArrays - Generated BAML function
-    pub async fn test_object_arrays(
-        &self,
-        input: String,
-    ) -> BamlResult<crate::types::ObjectArrays> {
+    pub async fn test_object_arrays(&self, input: String) -> BamlResult<crate::typesObjectArrays> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -185,7 +179,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::ObjectArrays>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesObjectArrays>>,
             > + Send
             + Sync,
     > {
@@ -199,10 +193,7 @@ impl BamlClient {
 }
 impl BamlClient {
     /// TestSimpleArrays - Generated BAML function
-    pub async fn test_simple_arrays(
-        &self,
-        input: String,
-    ) -> BamlResult<crate::types::SimpleArrays> {
+    pub async fn test_simple_arrays(&self, input: String) -> BamlResult<crate::typesSimpleArrays> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -215,7 +206,7 @@ impl BamlClient {
         input: String,
     ) -> BamlResult<
         impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::SimpleArrays>>,
+                Item = BamlResult<baml_client_rust::StreamState<crate::typesSimpleArrays>>,
             > + Send
             + Sync,
     > {
@@ -400,7 +391,7 @@ impl BamlClient {
     pub async fn test_top_level_mixed_array(
         &self,
         input: String,
-    ) -> BamlResult<Vec<crate::types::Union3BoolOrIntOrString>> {
+    ) -> BamlResult<Vec<crate::typesUnion3BoolOrIntOrString>> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -416,7 +407,7 @@ impl BamlClient {
     ) -> BamlResult<
         impl futures::Stream<
                 Item = BamlResult<
-                    baml_client_rust::StreamState<Vec<crate::types::Union3BoolOrIntOrString>>,
+                    baml_client_rust::StreamState<Vec<crate::typesUnion3BoolOrIntOrString>>,
                 >,
             > + Send
             + Sync,
@@ -493,7 +484,7 @@ impl BamlClient {
     pub async fn test_top_level_object_array(
         &self,
         input: String,
-    ) -> BamlResult<Vec<crate::types::User>> {
+    ) -> BamlResult<Vec<crate::typesUser>> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -507,9 +498,8 @@ impl BamlClient {
         &self,
         input: String,
     ) -> BamlResult<
-        impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<Vec<crate::types::User>>>,
-            > + Send
+        impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<Vec<crate::typesUser>>>>
+            + Send
             + Sync,
     > {
         let mut context = BamlContext::new();

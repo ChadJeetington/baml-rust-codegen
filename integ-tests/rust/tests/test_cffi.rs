@@ -149,14 +149,43 @@ async fn test_ffi_library_paths() {
     );
 }
 
-/// Test FFI callback mechanism (placeholder for future async callback tests)
+/// Test FFI callback mechanism
 #[tokio::test]
 async fn test_ffi_callback_mechanism() {
     init_test_logging();
+    use std::sync::atomic::{AtomicBool, Ordering};
+    use std::sync::Arc;
 
-    // This test will be expanded once we have generated code to test actual function calls
-    // For now, we test that we can create a client that uses the FFI interface
+    // Create flags to track callback invocations
+    let callback_called = Arc::new(AtomicBool::new(false));
+    let error_callback_called = Arc::new(AtomicBool::new(false));
+    let tick_callback_called = Arc::new(AtomicBool::new(false));
 
+    // Define callbacks
+    extern "C" fn test_callback(call_id: u32, is_done: i32, content: *const i8, length: usize) {
+        let content = unsafe { std::slice::from_raw_parts(content as *const u8, length) };
+        let content = String::from_utf8_lossy(content);
+        println!("Callback received: call_id={}, is_done={}, content={}", call_id, is_done, content);
+    }
+
+    extern "C" fn test_error_callback(call_id: u32, is_done: i32, content: *const i8, length: usize) {
+        let content = unsafe { std::slice::from_raw_parts(content as *const u8, length) };
+        let content = String::from_utf8_lossy(content);
+        println!("Error callback received: call_id={}, is_done={}, content={}", call_id, is_done, content);
+    }
+
+    extern "C" fn test_tick_callback(call_id: u32) {
+        println!("Tick callback received: call_id={}", call_id);
+    }
+
+    // Register callbacks
+    baml_client_rust::ffi::register_callbacks(
+        test_callback,
+        test_error_callback,
+        test_tick_callback,
+    );
+
+    // Create client to test callback integration
     let client = test_config::setup_test_client().expect("Failed to create FFI-based client");
 
     // The client should be using FFI internally
@@ -165,7 +194,7 @@ async fn test_ffi_callback_mechanism() {
         "Client should have valid runtime pointer"
     );
 
-    println!("FFI-based client created successfully");
+    println!("FFI-based client created successfully with callbacks registered");
 }
 
 /// Test FFI memory management

@@ -60,8 +60,8 @@ impl BamlClient {
     /// ConsumeTestEnum - Generated BAML function
     pub async fn consume_test_enum(
         &self,
-        input: crate::types::TestEnum,
-    ) -> BamlResult<crate::types::TestEnum> {
+        input: crate::typesTestEnum,
+    ) -> BamlResult<crate::typesTestEnum> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -71,11 +71,10 @@ impl BamlClient {
     /// ConsumeTestEnum (streaming) - Generated BAML function  
     pub async fn consume_test_enum_stream(
         &self,
-        input: crate::types::TestEnum,
+        input: crate::typesTestEnum,
     ) -> BamlResult<
-        impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::TestEnum>>,
-            > + Send
+        impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::typesTestEnum>>>
+            + Send
             + Sync,
     > {
         let mut context = BamlContext::new();
@@ -91,7 +90,7 @@ impl BamlClient {
     pub async fn fn_test_aliased_enum_output(
         &self,
         input: String,
-    ) -> BamlResult<crate::types::TestEnum> {
+    ) -> BamlResult<crate::typesTestEnum> {
         let mut context = BamlContext::new();
         context = context.set_arg("input", input)?;
 
@@ -105,9 +104,8 @@ impl BamlClient {
         &self,
         input: String,
     ) -> BamlResult<
-        impl futures::Stream<
-                Item = BamlResult<baml_client_rust::StreamState<crate::types::TestEnum>>,
-            > + Send
+        impl futures::Stream<Item = BamlResult<baml_client_rust::StreamState<crate::typesTestEnum>>>
+            + Send
             + Sync,
     > {
         let mut context = BamlContext::new();
